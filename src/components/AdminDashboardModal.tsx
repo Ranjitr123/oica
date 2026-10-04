@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Lock, Trash2, Shield, AlertCircle, CheckCircle, RefreshCw, Key, FilePlus, Database, Search, Sparkles, Upload, FileText } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Lock, LogOut, Trash2, Shield, AlertCircle, CheckCircle, RefreshCw, Key, FilePlus, Database, Search, Sparkles, Upload, FileText } from "lucide-react";
 import { CertificateRecord } from "@/data/certificatesData";
 
 interface AdminDashboardModalProps {
@@ -41,11 +41,25 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
     authorizedSignatory: "Dr. A. K. Verma, Academic Director"
   });
 
-  const generateAutoCertNumber = () => {
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
+  // Check persistent session on mount / modal open
+  useEffect(() => {
+    if (typeof window !== "undefined" && isOpen) {
+      const savedAuth = localStorage.getItem("oica_admin_auth");
+      const savedKey = localStorage.getItem("oica_admin_key");
+      if (savedAuth === "true" && savedKey) {
+        setIsAuthenticated(true);
+        setAdminKey(savedKey);
+        fetchCertificates();
+      }
+    }
+  }, [isOpen]);
+
+  // Generate 4-digit padded sequential certificate ID (e.g., OICA-2026-CS0001)
+  const generateAutoCertNumber = (existingCerts: CertificateRecord[] = certificates) => {
     const year = new Date().getFullYear();
-    const prefix = "OICA-" + year + "-CS" + randomNum;
-    setFormData(prev => ({ ...prev, certificateNumber: prefix }));
+    const nextSeq = (existingCerts.length + 1).toString().padStart(4, "0");
+    const certID = `OICA-${year}-CS${nextSeq}`;
+    setFormData(prev => ({ ...prev, certificateNumber: certID }));
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -57,9 +71,22 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
     if (keyToUse === expected || keyToUse === "SanjitPritam@123") {
       setAdminKey(keyToUse);
       setIsAuthenticated(true);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("oica_admin_auth", "true");
+        localStorage.setItem("oica_admin_key", keyToUse);
+      }
       fetchCertificates();
     } else {
-      setErrorMsg("Invalid Admin Security Key. Please use 'admin123'.");
+      setErrorMsg("Invalid Admin Security Key. Access Denied.");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setAdminKey("");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("oica_admin_auth");
+      localStorage.removeItem("oica_admin_key");
     }
   };
 
@@ -142,14 +169,16 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
         throw new Error(data.error || "Failed to create certificate");
       }
 
-      setSuccessMsg(`Success! Certificate '${formData.certificateNumber}' published to Supabase database.`);
+      setSuccessMsg(`Success! Certificate '${formData.certificateNumber}' published to database.`);
       fetchCertificates();
       if (onCertificateAdded) onCertificateAdded();
 
-      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      // Reset form with next padded ID
+      const year = new Date().getFullYear();
+      const nextSeq = (certificates.length + 2).toString().padStart(4, "0");
       setFormData(prev => ({
         ...prev,
-        certificateNumber: `OICA-2026-WD${randomNum}`,
+        certificateNumber: `OICA-${year}-CS${nextSeq}`,
         studentName: "",
         fatherName: "",
         pdfUrl: ""
@@ -167,11 +196,13 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
   };
 
   const handleDelete = async (id: string, certNo: string) => {
-    if (!confirm(`Are you sure you want to delete Certificate '${certNo}'?`)) return;
+    // Fallback to certNo if id is undefined or string "undefined"
+    const targetId = (id && id !== "undefined") ? id : certNo;
+    if (!targetId || !confirm(`Are you sure you want to delete Certificate '${certNo}'?`)) return;
 
     setLoading(true);
     try {
-      const res = await fetch(`/api/certificates?id=${encodeURIComponent(id)}`, {
+      const res = await fetch(`/api/certificates?id=${encodeURIComponent(targetId)}`, {
         method: "DELETE",
         headers: {
           "x-admin-key": adminKey.trim() || "SanjitPritam@123"
@@ -179,6 +210,8 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
       });
       if (res.ok) {
         setSuccessMsg(`Certificate '${certNo}' deleted successfully.`);
+        // Instantly remove from local table UI state
+        setCertificates(prev => prev.filter(c => c.certificateNumber.toUpperCase() !== certNo.toUpperCase() && c.id !== targetId));
         fetchCertificates();
         if (onCertificateAdded) onCertificateAdded();
         setTimeout(() => setSuccessMsg(""), 2000);
@@ -186,8 +219,9 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
         const data = await res.json();
         alert(data.error || "Delete failed");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err.message || "Delete failed");
     } finally {
       setLoading(false);
     }
@@ -210,10 +244,21 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
             <Shield className="w-6 h-6 text-cyan-400" />
             <div>
               <h3>OICA Admin Control Center</h3>
-              <p>Upload Certificate PDF & Supabase Database Management</p>
+              <p>Upload Certificate PDF & Database Management</p>
             </div>
           </div>
-          <button onClick={onClose} className="modal-close-btn">&times;</button>
+          <div className="flex items-center space-x-3">
+            {isAuthenticated && (
+              <button
+                onClick={handleLogout}
+                className="btn-ghost text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1"
+                title="Log out of Admin Session"
+              >
+                <LogOut className="w-3.5 h-3.5" /> Log Out
+              </button>
+            )}
+            <button onClick={onClose} className="modal-close-btn">&times;</button>
+          </div>
         </div>
 
         {!isAuthenticated ? (
@@ -359,12 +404,13 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                             </td>
                             <td>
                               <button
-                                onClick={() => handleDelete(cert.id, cert.certificateNumber)}
+                                onClick={() => handleDelete(cert.id || cert.certificateNumber, cert.certificateNumber)}
                                 className="btn-danger-sm"
                                 title="Delete Certificate"
                               >
                                 <Trash2 className="w-3.5 h-3.5" />
                               </button>
+
                             </td>
                           </tr>
                         ))
@@ -390,7 +436,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                           <h5 className="font-bold text-white text-sm">Upload Official Certificate PDF Document</h5>
                           <p className="text-xs text-slate-400">Select a .pdf file from your computer to attach with this certificate number</p>
                         </div>
-                        
+
                         <label className="btn-secondary text-xs cursor-pointer inline-flex items-center gap-2">
                           <FileText className="w-4 h-4 text-cyan-400" />
                           <span>{uploadingFile ? "Uploading PDF..." : "Choose Certificate PDF File"}</span>
@@ -416,15 +462,15 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                         <label>Certificate Number (Unique Identifier) *</label>
                         <button
                           type="button"
-                          onClick={generateAutoCertNumber}
+                          onClick={() => generateAutoCertNumber()}
                           className="btn-link"
                         >
-                          <Sparkles className="w-3.5 h-3.5" /> Auto-Generate ID
+                          <Sparkles className="w-3.5 h-3.5" /> Auto-Generate ID (e.g. OICA-2026-CS0001)
                         </button>
                       </div>
                       <input
                         type="text"
-                        placeholder="e.g. OICA-2026-CS8942"
+                        placeholder="e.g. OICA-2026-CS0001"
                         value={formData.certificateNumber}
                         onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
                         required

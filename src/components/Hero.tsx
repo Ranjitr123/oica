@@ -1,13 +1,16 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Award, GraduationCap, CheckCircle2, ArrowRight, Sparkles, Server, Zap } from "lucide-react";
+import { ShieldCheck, Award, GraduationCap, CheckCircle2, ArrowRight, Sparkles, Server, Zap, Phone, MessageCircle, MapPin, UserCheck } from "lucide-react";
 
 interface HeroProps {
   onVerifyClick: () => void;
 }
 
 export default function Hero({ onVerifyClick }: HeroProps) {
+  const phoneNumber = "9777735527";
+  const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICA Institute, I would like to inquire about courses/certificates.")}`;
+
   return (
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
       {/* Background Animated Gradients */}
@@ -18,9 +21,15 @@ export default function Hero({ onVerifyClick }: HeroProps) {
           
           {/* Left Column: Headlines & CTA */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span>Next-Gen Online Verifiable Certificates</span>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Next-Gen Online Verifiable Certificates</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
+                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Managed by: Sanjit Kumar Rautaray</span>
+              </div>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
@@ -33,6 +42,41 @@ export default function Hero({ onVerifyClick }: HeroProps) {
             <p className="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
               Odisha Institute of Computer Applications (OICA) provides industry-accredited computer courses with instant QR-coded digital certificates connected to our online database.
             </p>
+
+            {/* Address & Direct Contact Card */}
+            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs space-y-2 text-slate-300">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                <span><strong>Address:</strong> At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019</span>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/60">
+                <div className="flex items-center gap-2">
+                  <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+                  <span><strong>Managed by:</strong> Sanjit Kumar Rautaray</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <a
+                    href={`tel:${phoneNumber}`}
+                    className="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1.5 transition-all"
+                  >
+                    <Phone className="w-3 h-3" />
+                    <span>Call: {phoneNumber}</span>
+                  </a>
+
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1 rounded bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold flex items-center gap-1.5 transition-all"
+                  >
+                    <MessageCircle className="w-3 h-3" />
+                    <span>WhatsApp</span>
+                  </a>
+                </div>
+              </div>
+            </div>
 
             {/* CTA Buttons */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">

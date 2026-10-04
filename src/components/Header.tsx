@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Award, ShieldCheck, Search, Lock, BookOpen, Sparkles } from "lucide-react";
+import { Award, ShieldCheck, Search, Lock, BookOpen, Sparkles, Phone, MessageCircle } from "lucide-react";
 import AdminDashboardModal from "./AdminDashboardModal";
 
 interface HeaderProps {
@@ -47,21 +47,41 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
           </nav>
 
           {/* Action CTA Buttons */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <a
+              href="tel:9777735527"
+              className="p-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 text-xs font-semibold flex items-center gap-1.5 transition-all"
+              title="Call Sanjit Kumar Rautaray (9777735527)"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">9777735527</span>
+            </a>
+
+            <a
+              href="https://wa.me/919777735527?text=Hello%20OICA%20Institute%2C%20I%20have%20an%20inquiry"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/20 text-xs font-semibold flex items-center gap-1.5 transition-all"
+              title="WhatsApp Chat"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">WhatsApp</span>
+            </a>
+
             <button
               onClick={onSearchClick}
-              className="px-4 py-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center space-x-2 transition-all shadow-sm"
+              className="px-3 py-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center space-x-1.5 transition-all shadow-sm"
             >
               <Search className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="hidden sm:inline">Verify Certificate</span>
+              <span className="hidden sm:inline">Verify</span>
             </button>
 
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="btn-primary text-xs flex items-center space-x-2"
+              className="btn-primary text-xs flex items-center space-x-1.5 py-2 px-3"
             >
               <Lock className="w-3.5 h-3.5" />
-              <span>Admin Portal</span>
+              <span>Admin</span>
             </button>
           </div>
         </div>

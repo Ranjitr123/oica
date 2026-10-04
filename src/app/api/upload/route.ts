@@ -24,10 +24,15 @@ export async function POST(request: Request) {
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    // Extract original filename and extension
     const ext = path.extname(file.name) || ".pdf";
-    const cleanFileName = `cert_${Date.now()}_${Math.floor(Math.random() * 1000)}${ext}`;
+    const rawBaseName = path.basename(file.name, ext);
 
-    // Upload directly to Supabase Storage Bucket 'certificates'
+    // Sanitize spaces and special characters while preserving the original name
+    const sanitizedBaseName = rawBaseName.replace(/[^a-zA-Z0-9_\-]/g, "_").replace(/_+/g, "_");
+    const cleanFileName = `${sanitizedBaseName || "certificate"}${ext}`;
+
+    // Upload directly to Supabase Storage Bucket 'certificates' with original filename
     const { data, error } = await supabase.storage
       .from("certificates")
       .upload(cleanFileName, buffer, {

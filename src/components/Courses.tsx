@@ -1,63 +1,63 @@
 "use client";
 
 import React from "react";
-import { Code, Brain, Shield, Cloud, Database, Layout, Clock, Award, CheckCircle } from "lucide-react";
+import { Code, Brain, Shield, Cloud, Database, Layout, Clock, Award, CheckCircle, GraduationCap, Terminal, Cpu, Layers } from "lucide-react";
 
 export default function Courses() {
   const coursesList = [
     {
-      icon: Code,
-      title: "Advanced Full-Stack Web Development",
-      code: "FSWD-601",
+      icon: GraduationCap,
+      title: "PGDCA (Post Graduate Diploma in Computer Applications)",
+      code: "PGDCA-101",
+      duration: "1 Year (12 Months)",
+      level: "Post Graduate Diploma",
+      skills: ["Advanced MS Office & Tally ERP", "C, C++ & Data Structures", "RDBMS & SQL Database Systems", "Web Applications & Python Programming"],
+      badgeColor: "from-purple-600 to-indigo-600"
+    },
+    {
+      icon: Cpu,
+      title: "DCA (Diploma in Computer Applications)",
+      code: "DCA-102",
       duration: "6 Months (720 Hrs)",
-      level: "Professional Level",
-      skills: ["React 19 & Next.js", "Node.js & Express", "Supabase & Postgres", "Tailwind & Vanilla CSS"],
+      level: "Diploma Certification",
+      skills: ["Computer Fundamentals & Windows OS", "MS Office Suite (Word, Excel, PowerPoint)", "Internet Services & Digital Security", "Basic Database Management & DTP"],
       badgeColor: "from-cyan-500 to-blue-600"
     },
     {
-      icon: Brain,
-      title: "AI & Machine Learning Specialization",
-      code: "AIML-802",
-      duration: "12 Months (1440 Hrs)",
-      level: "Post Graduate Diploma",
-      skills: ["Python & PyTorch", "Deep Learning", "LLM Fine-Tuning", "Computer Vision"],
-      badgeColor: "from-purple-500 to-indigo-600"
+      icon: Layout,
+      title: "Frontend Web Development",
+      code: "FED-201",
+      duration: "4 Months (480 Hrs)",
+      level: "Professional Certificate",
+      skills: ["HTML5, CSS3 & Modern JavaScript (ES6+)", "React 19 & Next.js App Router", "Tailwind CSS & Responsive Styling", "UI/UX Components & State Management"],
+      badgeColor: "from-blue-500 to-cyan-500"
     },
     {
-      icon: Shield,
-      title: "Cyber Security & Ethical Hacking",
-      code: "CSEC-403",
+      icon: Database,
+      title: "Backend Development & Database Systems",
+      code: "BED-301",
       duration: "4 Months (480 Hrs)",
-      level: "Certified Security Expert",
-      skills: ["Network Security", "Penetration Testing", "Cryptography", "Vulnerability Audit"],
+      level: "Professional Certificate",
+      skills: ["Node.js & Express.js REST APIs", "PostgreSQL & Supabase Database", "Authentication, JWT & Security", "API Architecture & Microservices"],
       badgeColor: "from-emerald-500 to-teal-600"
     },
     {
       icon: Cloud,
-      title: "Cloud Engineering & DevOps Architecture",
-      code: "CLD-505",
+      title: "DevOps & Cloud Engineering",
+      code: "DEVOPS-401",
       duration: "6 Months (720 Hrs)",
-      level: "Industry Certification",
-      skills: ["AWS & Cloud Infrastructure", "Docker & Kubernetes", "CI/CD Pipelines", "Terraform"],
+      level: "Advanced Certification",
+      skills: ["Docker Containerization & Kubernetes", "CI/CD Pipelines & GitHub Actions", "AWS Cloud Infrastructure & Hosting", "Linux System Admin & Shell Scripting"],
       badgeColor: "from-amber-500 to-orange-600"
     },
     {
-      icon: Database,
-      title: "Data Science & Big Analytics",
-      code: "DS-304",
+      icon: Code,
+      title: "Full Stack Software Engineering",
+      code: "FSWD-501",
       duration: "6 Months (720 Hrs)",
-      level: "Professional Diploma",
-      skills: ["SQL & Data Modeling", "Pandas & NumPy", "Power BI & Tableau", "Predictive Analytics"],
-      badgeColor: "from-pink-500 to-rose-600"
-    },
-    {
-      icon: Layout,
-      title: "UI/UX & Product Design Engineering",
-      code: "UIUX-201",
-      duration: "3 Months (360 Hrs)",
-      level: "Executive Certification",
-      skills: ["Figma & Design Systems", "User Research & Testing", "Wireframing & Prototyping", "Design Tokens"],
-      badgeColor: "from-cyan-500 to-teal-500"
+      level: "Master Diploma",
+      skills: ["End-to-End MERN / Next.js Stack", "Database Modeling & Real-Time Sync", "Cloud Deployment & DevOps Setup", "Hands-On Capstone Industry Projects"],
+      badgeColor: "from-pink-500 to-purple-600"
     }
   ];
 

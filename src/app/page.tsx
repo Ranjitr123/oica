@@ -8,6 +8,7 @@ import VerificationSection from "@/components/VerificationSection";
 import Courses from "@/components/Courses";
 import Features from "@/components/Features";
 import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot";
 
 function PageContent() {
   const searchParams = useSearchParams();
@@ -55,6 +56,7 @@ function PageContent() {
       </main>
 
       <Footer />
+      <Chatbot />
     </div>
   );
 }

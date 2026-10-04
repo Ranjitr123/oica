@@ -10,7 +10,7 @@ export async function GET(request: Request) {
       const { data, source } = await getCertificateByNumber(certNumber);
       if (!data) {
         return NextResponse.json(
-          { error: `No valid certificate found for ID '${certNumber}' in Supabase database. Please verify the certificate number.` },
+          { error: `No valid certificate found for ID '${certNumber}' in database. Please verify the certificate number.` },
           { status: 404 }
         );
       }
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     const { data, source } = await getAllCertificates();
     return NextResponse.json({ certificates: data, count: data.length, source });
   } catch (err: any) {
-    return NextResponse.json({ error: err.message || "Failed to fetch certificates from Supabase" }, { status: 500 });
+    return NextResponse.json({ error: err.message || "Failed to fetch certificates from database" }, { status: 500 });
   }
 }
 
@@ -56,15 +56,15 @@ export async function POST(request: Request) {
       percentage: certificate.percentage || "95%",
       studentPhotoUrl: certificate.studentPhotoUrl || "",
       pdfUrl: certificate.pdfUrl || "",
-      centerName: certificate.centerName || "AICA Main Tech Campus",
+      centerName: certificate.centerName || "OICA Main Tech Campus",
       verificationStatus: certificate.verificationStatus || "VERIFIED",
       authorizedSignatory: certificate.authorizedSignatory || "Dr. A. K. Verma, Academic Director"
     });
 
-    return NextResponse.json({ 
-      message: "Certificate published to Supabase database successfully!", 
-      certificate: result.certificate, 
-      source: result.source 
+    return NextResponse.json({
+      message: "Certificate published to database successfully!",
+      certificate: result.certificate,
+      source: result.source
     }, { status: 201 });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Server Error" }, { status: 500 });
@@ -74,7 +74,8 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get("id") || searchParams.get("number");
+    const rawId = searchParams.get("id") || searchParams.get("number") || "";
+    const id = rawId.trim();
     const adminKey = (request.headers.get("x-admin-key") || "").trim();
 
     const expectedKey = (process.env.ADMIN_SECRET_KEY || "SanjitPritam@123").trim();
@@ -82,13 +83,14 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Invalid Admin Security Key" }, { status: 401 });
     }
 
-    if (!id) {
-      return NextResponse.json({ error: "Missing certificate ID or number" }, { status: 400 });
+    if (!id || id === "undefined" || id === "null") {
+      return NextResponse.json({ error: "Missing valid certificate ID or number" }, { status: 400 });
     }
 
     const result = await deleteCertificate(id);
-    return NextResponse.json({ message: "Certificate deleted from Supabase successfully", source: result.source });
+    return NextResponse.json({ message: "Certificate deleted from database successfully", source: result.source });
   } catch (err: any) {
     return NextResponse.json({ error: err.message || "Delete failed" }, { status: 500 });
   }
 }
+

@@ -168,19 +168,90 @@ export async function createCertificate(newCert: Omit<CertificateRecord, "id" | 
 }
 
 export async function deleteCertificate(idOrCertNo: string): Promise<{ success: boolean; source: "supabase" | "local" }> {
+  const cleanId = (idOrCertNo || "").trim();
+  const cleanNo = cleanId.toUpperCase();
+
+  if (!cleanId || cleanId === "undefined" || cleanId === "null") {
+    return { success: false, source: "local" };
+  }
+
+  let pdfUrlToDelete = "";
+
+  const localData = ensureLocalStore();
+  const existing = localData.find(
+    c => c.id === cleanId || c.certificateNumber.toUpperCase() === cleanNo
+  );
+  if (existing && existing.pdfUrl) {
+    pdfUrlToDelete = existing.pdfUrl;
+  }
+
   if (isSupabaseConfigured && supabase) {
     try {
+      // 1. Fetch pdf_url from Supabase BEFORE deleting row if not found locally
+      if (!pdfUrlToDelete) {
+        const { data } = await supabase
+          .from("certificates")
+          .select("pdf_url")
+          .or(`id.eq.${cleanId},certificate_number.ilike.${cleanNo}`)
+          .maybeSingle();
+        if (data && data.pdf_url) {
+          pdfUrlToDelete = data.pdf_url;
+        }
+      }
+
+      // 2. Delete attached PDF file object from Supabase Storage bucket FIRST
+      if (pdfUrlToDelete) {
+        let storageFilePath = "";
+        if (pdfUrlToDelete.includes("/certificates/")) {
+          const parts = pdfUrlToDelete.split("/certificates/");
+          storageFilePath = decodeURIComponent(parts[parts.length - 1].split("?")[0]);
+        } else if (!pdfUrlToDelete.startsWith("http") && !pdfUrlToDelete.startsWith("/")) {
+          storageFilePath = pdfUrlToDelete;
+        }
+
+        if (storageFilePath) {
+          const { error: remError } = await supabase.storage
+            .from("certificates")
+            .remove([storageFilePath]);
+          if (remError) {
+            console.warn("Supabase Storage remove error:", remError.message);
+          } else {
+            console.log(`Successfully deleted PDF file '${storageFilePath}' from Supabase Storage bucket 'certificates'.`);
+          }
+        }
+      }
+
+      // 3. Delete row from Supabase Cloud Table
       await supabase
         .from("certificates")
         .delete()
-        .or(`id.eq.${idOrCertNo},certificate_number.eq.${idOrCertNo}`);
+        .or(`id.eq.${cleanId},certificate_number.ilike.${cleanNo}`);
+
     } catch (err) {
       console.warn("Supabase delete exception:", err);
     }
   }
 
-  const localData = ensureLocalStore();
-  const filtered = localData.filter(c => c.id !== idOrCertNo && c.certificateNumber.toUpperCase() !== idOrCertNo.toUpperCase());
+  // 4. Delete local file if stored in public/uploads/
+  if (pdfUrlToDelete && pdfUrlToDelete.startsWith("/uploads/")) {
+    try {
+      const localFilePath = path.join(process.cwd(), "public", pdfUrlToDelete);
+      if (fs.existsSync(localFilePath)) {
+        fs.unlinkSync(localFilePath);
+      }
+    } catch (err) {
+      console.warn("Error deleting local PDF file:", err);
+    }
+  }
+
+  // 5. Delete row from local JSON database
+  const filtered = localData.filter(
+    c => c.id !== cleanId && c.certificateNumber.toUpperCase() !== cleanNo
+  );
   saveLocalStore(filtered);
+
   return { success: true, source: "local" };
 }
+
+
+
