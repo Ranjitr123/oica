@@ -179,7 +179,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
       const nextSeq = (certificates.length + 2).toString().padStart(4, "0");
       setFormData(prev => ({
         ...prev,
-        certificateNumber: `OICA-${year}-CS${nextSeq}`,
+        certificateNumber: `OICS-${year}-CS${nextSeq}`,
         studentName: "",
         fatherName: "",
         pdfUrl: ""
@@ -244,7 +244,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
           <div className="admin-header-title">
             <Shield className="w-6 h-6 text-cyan-400" />
             <div>
-              <h3>OICA Admin Control Center</h3>
+              <h3>OICS Admin Control Center</h3>
               <p>Upload Certificate PDF & Database Management</p>
             </div>
           </div>

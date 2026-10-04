@@ -9,7 +9,7 @@ interface HeroProps {
 
 export default function Hero({ onVerifyClick }: HeroProps) {
   const phoneNumber = "9777735527";
-  const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICA Institute, I would like to inquire about courses/certificates.")}`;
+  const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICS Institute, I would like to inquire about courses/certificates.")}`;
 
   return (
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
@@ -138,7 +138,7 @@ export default function Hero({ onVerifyClick }: HeroProps) {
                 <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                      ID: OICA-2026-CS8942
+                      ID: OICS-2026-CS8942
                     </span>
                     <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> Authentic Record

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { Download, Printer, ShieldCheck, Copy, Check, FileText, ExternalLink, Award } from "lucide-react";
 import { CertificateRecord } from "@/data/certificatesData";
@@ -14,13 +14,18 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
   const certRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [origin, setOrigin] = useState("https://oica-institute.edu");
   const [viewMode, setViewMode] = useState<"uploaded_pdf" | "digital_card">(
     certificate.pdfUrl ? "uploaded_pdf" : "digital_card"
   );
 
-  const verificationUrl = typeof window !== "undefined"
-    ? `${window.location.origin}/?cert=${encodeURIComponent(certificate.certificateNumber)}`
-    : `https://oica-institute.edu/verify?cert=${certificate.certificateNumber}`;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
+  const verificationUrl = `${origin}/?cert=${encodeURIComponent(certificate.certificateNumber)}`;
 
   const handleDownloadPNG = async () => {
     if (!certRef.current) return;
@@ -35,7 +40,7 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
       });
       const image = canvas.toDataURL("image/png", 1.0);
       const link = document.createElement("a");
-      link.download = `OICA-Certificate-${certificate.certificateNumber}.png`;
+      link.download = `OICS-Certificate-${certificate.certificateNumber}.png`;
       link.href = image;
       link.click();
     } catch (err) {
@@ -50,7 +55,7 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
     if (certificate.pdfUrl) {
       const link = document.createElement("a");
       link.href = certificate.pdfUrl;
-      link.download = `OICA-Certificate-${certificate.certificateNumber}.pdf`;
+      link.download = `OICS-Certificate-${certificate.certificateNumber}.pdf`;
       link.target = "_blank";
       link.click();
       return;
@@ -79,7 +84,7 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`OICA-Certificate-${certificate.certificateNumber}.pdf`);
+      pdf.save(`OICS-Certificate-${certificate.certificateNumber}.pdf`);
     } catch (err) {
       console.error("PDF download error:", err);
       window.print();
@@ -295,7 +300,7 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
                   <div className="cert-gold-seal">
                     <div className="seal-circle">
                       <span>OFFICIAL</span>
-                      <strong>OICA</strong>
+                      <strong>OICS</strong>
                       <span>SEAL</span>
                     </div>
                   </div>

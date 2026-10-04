@@ -56,7 +56,7 @@ export async function POST(request: Request) {
       percentage: certificate.percentage || "95%",
       studentPhotoUrl: certificate.studentPhotoUrl || "",
       pdfUrl: certificate.pdfUrl || "",
-      centerName: certificate.centerName || "OICA Main Tech Campus",
+      centerName: certificate.centerName || "OICS Tech Innovation Hub",
       verificationStatus: certificate.verificationStatus || "VERIFIED",
       authorizedSignatory: certificate.authorizedSignatory || "Dr. A. K. Verma, Academic Director"
     });

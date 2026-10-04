@@ -143,7 +143,7 @@ export async function createCertificate(newCert: Omit<CertificateRecord, "id" | 
         percentage: newCert.percentage || "95%",
         student_photo_url: newCert.studentPhotoUrl || "",
         pdf_url: newCert.pdfUrl || "",
-        center_name: newCert.centerName || "OICA Main Tech Campus",
+        center_name: newCert.centerName || "OICS Tech Innovation Hub",
         verification_status: newCert.verificationStatus || "VERIFIED",
         authorized_signatory: newCert.authorizedSignatory || "Dr. A. K. Verma, Academic Director"
       };

@@ -5,7 +5,8 @@ import { Award, ShieldCheck, Mail, Phone, MapPin, UserCheck, MessageCircle } fro
 
 export default function Footer() {
   const phoneNumber = "9777735527";
-  const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICA Institute, I would like to inquire about courses/certificates.")}`;
+  const emailAddress = "sanjit007muna@gmail.com";
+  const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICS Institute, I would like to inquire about courses/certificates.")}`;
 
   return (
     <footer className="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12 px-4 sm:px-6 lg:px-8">
@@ -18,13 +19,13 @@ export default function Footer() {
               <Award className="w-5 h-5 text-cyan-400" />
             </div>
             <div>
-              <span className="font-extrabold text-lg text-white font-mono block leading-tight">OICA Institute</span>
-              <span className="text-[11px] text-cyan-400 font-semibold">Odisha Institute of Computer Applications</span>
+              <span className="font-extrabold text-lg text-white font-mono block leading-tight">OICS Institute</span>
+              <span className="text-[11px] text-cyan-400 font-semibold">Odisha Institute of Computer Studies</span>
             </div>
           </div>
 
           <p className="text-slate-400 max-w-md leading-relaxed">
-            ISO 9001:2026 Certified Educational Institution dedicated to high-impact technical training, computer applications, and tamper-proof digital credentials.
+            ISO 9001:2026 Certified Educational Institution dedicated to high-impact technical training, computer applications, software engineering, and tamper-proof digital credentials.
           </p>
 
           <div className="pt-1 flex flex-wrap items-center gap-3">
@@ -46,7 +47,7 @@ export default function Footer() {
           <ul className="space-y-2">
             <li><a href="#verify" className="hover:text-cyan-400 transition-colors">Verify Certificate</a></li>
             <li><a href="#courses" className="hover:text-cyan-400 transition-colors">Certified Programs</a></li>
-            <li><a href="#features" className="hover:text-cyan-400 transition-colors">Institute Standards</a></li>
+            <li><a href="#features" className="hover:text-cyan-400 transition-colors">Why Choose OICS</a></li>
           </ul>
         </div>
 
@@ -72,6 +73,11 @@ export default function Footer() {
             <li className="flex items-center gap-2 text-slate-300">
               <Phone className="w-4 h-4 text-cyan-400 shrink-0" />
               <span><strong>Mobile:</strong> +91 {phoneNumber}</span>
+            </li>
+
+            <li className="flex items-center gap-2 text-slate-300">
+              <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span><strong>Email:</strong> <a href={`mailto:${emailAddress}`} className="text-cyan-400 hover:underline">{emailAddress}</a></span>
             </li>
           </ul>
 
@@ -100,10 +106,11 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-slate-500">
-        <p>© {new Date().getFullYear()} Odisha Institute of Computer Applications (OICA). Managed by Sanjit Kumar Rautaray. All Rights Reserved.</p>
-        <p className="mt-2 sm:mt-0">Address: At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019</p>
+        <p>© 2026 Odisha Institute of Computer Studies (OICS). Managed by Sanjit Kumar Rautaray. All Rights Reserved.</p>
+        <p className="mt-2 sm:mt-0">Email: {emailAddress} | Address: At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019</p>
       </div>
     </footer>
   );
 }
+
 

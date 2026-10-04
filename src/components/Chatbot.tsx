@@ -19,7 +19,7 @@ export default function Chatbot() {
       id: "welcome-1",
       sender: "bot",
       text: "👋 Welcome to Odisha Institute of Computer Studies (OICS)! I am your AI Virtual Assistant. How can I assist you today?",
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: "Just now",
       options: [
         { label: "🎓 PGDCA & DCA Details", action: "courses_pgdca" },
         { label: "💻 Frontend, Backend & DevOps", action: "courses_dev" },
@@ -148,7 +148,7 @@ export default function Chatbot() {
         window.scrollTo({ top: 400, behavior: "smooth" });
       }
     } else if (action === "whatsapp_action") {
-      window.open("https://wa.me/919777735527?text=Hello%20OICA%20Institute%2C%20I%20have%20an%20inquiry", "_blank");
+      window.open("https://wa.me/919777735527?text=Hello%20OICS%20Institute%2C%20I%20have%20an%20inquiry", "_blank");
     }
   };
 
@@ -166,7 +166,7 @@ export default function Chatbot() {
           <button
             onClick={() => setIsOpen(true)}
             className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 hover:scale-105 active:scale-95 text-white flex items-center justify-center shadow-xl shadow-cyan-500/30 transition-all duration-300 ring-2 ring-white/20 group"
-            aria-label="Open OICA Assistant"
+            aria-label="Open OICS Assistant"
           >
             <Bot className="w-7 h-7 text-white group-hover:rotate-12 transition-transform duration-300" />
             <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-950"></span>
@@ -261,7 +261,7 @@ export default function Chatbot() {
                         <span>Call Sanjit Kumar Rautaray (9777735527)</span>
                       </a>
                       <a
-                        href="https://wa.me/919777735527?text=Hello%20OICA%20Institute%2C%20I%20have%20an%20inquiry"
+                        href="https://wa.me/919777735527?text=Hello%20OICS%20Institute%2C%20I%20have%20an%20inquiry"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full py-2 px-3 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold text-xs flex items-center justify-center gap-2 transition-all"

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="16" y="16" width="480" height="480" rx="100" fill="url(#bgGrad)" />
+  <rect x="32" y="32" width="448" height="448" rx="84" fill="none" stroke="#ffffff" stroke-width="12" stroke-opacity="0.3" />
+  
+  <circle cx="256" cy="220" r="110" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="16" />
+  
+  <path d="M210 180 h92 v60 h-92 z" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linejoin="round" />
+  <path d="M236 240 v24 h40 v-24" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linejoin="round" />
+  <path d="M216 264 h80" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" />
+  
+  <path d="M200 310 L160 410 L210 380 L256 410 L256 310 Z" fill="url(#goldGrad)" />
+  <path d="M256 310 L256 410 L302 380 L352 410 L312 310 Z" fill="#d97706" />
+  
+  <text x="256" y="155" text-anchor="middle" fill="#ffffff" font-family="monospace, sans-serif" font-weight="900" font-size="42" letter-spacing="2">OICS</text>
+</svg>
