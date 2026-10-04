@@ -250,10 +250,29 @@ body {
   pointer-events: none;
 }
 
-.corner-tl { top: 8px; left: 8px; border-width: 3px 0 0 3px; }
-.corner-tr { top: 8px; right: 8px; border-width: 3px 3px 0 0; }
-.corner-bl { bottom: 8px; left: 8px; border-width: 0 0 3px 3px; }
-.corner-br { bottom: 8px; right: 8px; border-width: 0 3px 3px 0; }
+.corner-tl {
+  top: 8px;
+  left: 8px;
+  border-width: 3px 0 0 3px;
+}
+
+.corner-tr {
+  top: 8px;
+  right: 8px;
+  border-width: 3px 3px 0 0;
+}
+
+.corner-bl {
+  bottom: 8px;
+  left: 8px;
+  border-width: 0 0 3px 3px;
+}
+
+.corner-br {
+  bottom: 8px;
+  right: 8px;
+  border-width: 0 3px 3px 0;
+}
 
 .cert-watermark {
   position: absolute;
@@ -404,7 +423,7 @@ body {
   border: 1px solid #e2e8f0;
   padding: 6px 16px;
   border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .grade-label {
@@ -867,6 +886,7 @@ body {
     background: #ffffff !important;
     color: #000000 !important;
   }
+
   .print\:hidden,
   header,
   footer,
@@ -878,14 +898,47 @@ body {
   .admin-modal-overlay {
     display: none !important;
   }
+
   .cert-container-outer {
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
   }
+
   .cert-document {
     border-width: 8px !important;
     min-height: auto !important;
     page-break-inside: avoid;
   }
+}
+
+
+/* ========================================================
+   HIDE NETLIFY AD BADGES & DEPLOY PREVIEW WIDGETS
+   ======================================================== */
+[data-netlify-badge],
+[class*="netlify-badge"],
+[id*="netlify-badge"],
+[id*="netlify-drawer"],
+[class*="netlify-drawer"],
+[data-netlify-deploy-preview-badge],
+iframe[src*="netlify"],
+iframe[title*="Netlify"],
+a[href*="netlify.com"][class*="badge"],
+a[href*="netlify.app"][class*="badge"],
+div[class*="netlify-feedback"],
+div[class*="netlify-badge"],
+#netlify-badge-wrapper,
+.netlify-badge-wrapper,
+[data-netlify] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  z-index: -9999 !important;
 }
