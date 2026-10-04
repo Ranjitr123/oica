@@ -15,32 +15,32 @@ export default function Hero({ onVerifyClick }: HeroProps) {
     <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
       {/* Background Animated Gradients */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-tr from-cyan-500/10 via-blue-600/10 to-indigo-600/10 blur-3xl pointer-events-none rounded-full"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Left Column: Headlines & CTA */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] sm:text-xs font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                 <span>Next-Gen Online Verifiable Certificates</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
-                <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] sm:text-xs font-semibold">
+                <UserCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span>Managed by: Sanjit Kumar Rautaray</span>
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-tight break-words max-w-full">
               Empowering Digital Careers With{" "}
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent inline-block">
                 Verifiable Credentials
               </span>
             </h1>
 
-            <p className="text-slate-300 text-base sm:text-lg max-w-2xl leading-relaxed">
-              Odisha Institute of Computer Applications (OICA) provides industry-accredited computer courses with instant QR-coded digital certificates connected to our online database.
+            <p className="text-slate-300 text-sm sm:text-base lg:text-lg max-w-2xl leading-relaxed">
+              Odisha Institute of Computer Studies (OICS) provides industry-accredited computer courses with instant QR-coded digital certificates connected to our online database.
             </p>
 
             {/* Address & Direct Contact Card */}

@@ -21,7 +21,7 @@ export interface CertificateRecord {
 export const INITIAL_CERTIFICATES: CertificateRecord[] = [
   {
     id: "cert_001",
-    certificateNumber: "OICA-2026-CS8942",
+    certificateNumber: "OICS-2026-CS8942",
     studentName: "Aarav Sharma",
     fatherName: "Rajesh Sharma",
     courseName: "Advanced Full-Stack Web Development & Cloud Architecture",
@@ -32,14 +32,14 @@ export const INITIAL_CERTIFICATES: CertificateRecord[] = [
     grade: "Grade A+ (Distinction)",
     percentage: "96.5%",
     studentPhotoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    centerName: "OICA Tech Innovation Hub - Main Campus",
+    centerName: "OICS Tech Innovation Hub - Main Campus",
     verificationStatus: "VERIFIED",
     authorizedSignatory: "Dr. A. K. Verma, Academic Director",
     createdAt: new Date().toISOString()
   },
   {
     id: "cert_002",
-    certificateNumber: "OICA-2026-AI3105",
+    certificateNumber: "OICS-2026-AI3105",
     studentName: "Priya Patel",
     fatherName: "Suresh Patel",
     courseName: "Artificial Intelligence & Machine Learning Specialization",
@@ -50,14 +50,14 @@ export const INITIAL_CERTIFICATES: CertificateRecord[] = [
     grade: "Grade A+ (Honors)",
     percentage: "98.2%",
     studentPhotoUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-    centerName: "OICA AI Center of Excellence",
+    centerName: "OICS AI Center of Excellence",
     verificationStatus: "VERIFIED",
     authorizedSignatory: "Dr. A. K. Verma, Academic Director",
     createdAt: new Date().toISOString()
   },
   {
     id: "cert_003",
-    certificateNumber: "OICA-2026-WD7719",
+    certificateNumber: "OICS-2026-WD7719",
     studentName: "Rohan Verma",
     fatherName: "Mahesh Verma",
     courseName: "Cyber Security & Ethical Hacking Certified Expert",
@@ -68,7 +68,7 @@ export const INITIAL_CERTIFICATES: CertificateRecord[] = [
     grade: "Grade A (Excellent)",
     percentage: "91.8%",
     studentPhotoUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-    centerName: "OICA Cyber Defense Wing",
+    centerName: "OICS Cyber Defense Wing",
     verificationStatus: "VERIFIED",
     authorizedSignatory: "Dr. A. K. Verma, Academic Director",
     createdAt: new Date().toISOString()

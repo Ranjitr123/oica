@@ -50,7 +50,7 @@ function mapSupabaseRow(item: any): CertificateRecord {
     percentage: item.percentage || "95%",
     studentPhotoUrl: item.student_photo_url || "",
     pdfUrl: item.pdf_url || "",
-    centerName: item.center_name || "OICA Main Tech Campus",
+    centerName: item.center_name || "OICS Main Tech Campus",
     verificationStatus: item.verification_status || "VERIFIED",
     authorizedSignatory: item.authorized_signatory || "Dr. A. K. Verma, Academic Director",
     createdAt: item.created_at || new Date().toISOString()

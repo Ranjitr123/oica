@@ -20,10 +20,11 @@ export default function VerificationSection({ initialCertNumber = "", refreshTri
 
   // Sample quick test numbers
   const sampleCerts = [
-    { label: "OICA-2026-CS8942", name: "Aarav Sharma (Full-Stack)" },
-    { label: "OICA-2026-AI3105", name: "Priya Patel (AI & ML)" },
-    { label: "OICA-2026-WD7719", name: "Rohan Verma (Cyber Security)" }
+    { label: "OICS-2026-CS8942", name: "Aarav Sharma (Full-Stack)" },
+    { label: "OICS-2026-AI3105", name: "Priya Patel (AI & ML)" },
+    { label: "OICS-2026-WD7719", name: "Rohan Verma (Cyber Security)" }
   ];
+
 
   const performSearch = async (targetNo: string) => {
     const clean = targetNo.trim();
@@ -97,7 +98,7 @@ export default function VerificationSection({ initialCertNumber = "", refreshTri
             <Search className="w-6 h-6 text-slate-400 ml-3 shrink-0" />
             <input
               type="text"
-              placeholder="Enter Certificate Number (e.g. OICA-2026-CS8942)"
+              placeholder="Enter Certificate Number (e.g. OICS-2026-CS8942)"
               value={certNoInput}
               onChange={(e) => setCertNoInput(e.target.value)}
               className="w-full bg-transparent px-4 py-3 text-white text-base focus:outline-none placeholder-slate-500 font-mono tracking-wide"
@@ -145,7 +146,7 @@ export default function VerificationSection({ initialCertNumber = "", refreshTri
             <h4 className="font-semibold text-rose-200 mb-1">Verification Unsuccessful</h4>
             <p>{errorMsg}</p>
             <p className="mt-2 text-xs text-rose-400">
-              💡 Tip: Make sure you entered the complete certificate number including hyphens (e.g. <code>OICA-2026-CS8942</code>).
+              💡 Tip: Make sure you entered the complete certificate number including hyphens (e.g. <code>OICS-2026-CS8942</code>).
             </p>
           </div>
         </div>

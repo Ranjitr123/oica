@@ -36,7 +36,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
     percentage: "95.0%",
     studentPhotoUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     pdfUrl: "",
-    centerName: "OICA Tech Innovation Hub - Main Campus",
+    centerName: "OICS Tech Innovation Hub - Main Campus",
     verificationStatus: "VERIFIED" as "VERIFIED" | "SUSPENDED" | "REVOKED",
     authorizedSignatory: "Dr. A. K. Verma, Academic Director"
   });
@@ -54,13 +54,14 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
     }
   }, [isOpen]);
 
-  // Generate 4-digit padded sequential certificate ID (e.g., OICA-2026-CS0001)
+  // Generate 4-digit padded sequential certificate ID (e.g., OICS-2026-CS0001)
   const generateAutoCertNumber = (existingCerts: CertificateRecord[] = certificates) => {
     const year = new Date().getFullYear();
     const nextSeq = (existingCerts.length + 1).toString().padStart(4, "0");
-    const certID = `OICA-${year}-CS${nextSeq}`;
+    const certID = `OICS-${year}-CS${nextSeq}`;
     setFormData(prev => ({ ...prev, certificateNumber: certID }));
   };
+
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -465,12 +466,12 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                           onClick={() => generateAutoCertNumber()}
                           className="btn-link"
                         >
-                          <Sparkles className="w-3.5 h-3.5" /> Auto-Generate ID (e.g. OICA-2026-CS0001)
+                          <Sparkles className="w-3.5 h-3.5" /> Auto-Generate ID (e.g. OICS-2026-CS0001)
                         </button>
                       </div>
                       <input
                         type="text"
-                        placeholder="e.g. OICA-2026-CS0001"
+                        placeholder="e.g. OICS-2026-CS0001"
                         value={formData.certificateNumber}
                         onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
                         required

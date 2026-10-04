@@ -14,24 +14,24 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
 
   return (
     <>
-      <header className="header-glass sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <header className="header-glass sticky top-0 z-40 w-full max-w-full overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2">
           {/* Logo & Institute Name */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 ring-1 ring-white/20">
-              <Award className="w-6 h-6 text-white" />
+          <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20 ring-1 ring-white/20 shrink-0">
+              <Award className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-xl tracking-tight text-white font-mono">OICA</span>
-                <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">ISO 9001:2026</span>
+              <div className="flex items-center space-x-1.5">
+                <span className="font-extrabold text-base sm:text-xl tracking-tight text-white font-mono">OICS</span>
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">ISO 9001:2026</span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">Odisha Institute of Computer Applications</p>
+              <p className="text-[10px] sm:text-xs text-slate-400 font-medium truncate max-w-[150px] sm:max-w-none">Odisha Institute of Computer Studies</p>
             </div>
           </div>
 
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+          <nav className="hidden lg:flex items-center space-x-6 text-sm font-medium text-slate-300">
             <a href="#verify" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-cyan-400" />
               <span>Certificate Verification</span>
@@ -42,7 +42,7 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
             </a>
             <a href="#features" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-indigo-400" />
-              <span>Why Choose OICA</span>
+              <span>Why Choose OICS</span>
             </a>
           </nav>
 

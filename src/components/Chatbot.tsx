@@ -18,7 +18,7 @@ export default function Chatbot() {
     {
       id: "welcome-1",
       sender: "bot",
-      text: "👋 Welcome to Odisha Institute of Computer Applications (OICA)! I am your AI Virtual Assistant. How can I assist you today?",
+      text: "👋 Welcome to Odisha Institute of Computer Studies (OICS)! I am your AI Virtual Assistant. How can I assist you today?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       options: [
         { label: "🎓 PGDCA & DCA Details", action: "courses_pgdca" },
@@ -78,10 +78,10 @@ export default function Chatbot() {
         botResponse = {
           id: (Date.now() + 1).toString(),
           sender: "bot",
-          text: "⚡ Verification is simple!\n\n1. Scroll to the Verification Section on top.\n2. Enter your Certificate Registration Number (e.g., OICA-2026-CS0001).\n3. Click 'Verify Now' to view the authentic grade sheet, QR code, and download official PDF certificates.",
+          text: "⚡ Verification is simple!\n\n1. Scroll to the Verification Section on top.\n2. Enter your Certificate Registration Number (e.g., OICS-2026-CS0001).\n3. Click 'Verify Now' to view the authentic grade sheet, QR code, and download official PDF certificates.",
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           options: [
-            { label: "🔍 Try Sample ID: OICA-2026-CS0001", action: "sample_verify" },
+            { label: "🔍 Try Sample ID: OICS-2026-CS0001", action: "sample_verify" },
             { label: "📞 Contact Support", action: "contact_info" }
           ]
         };
@@ -111,7 +111,7 @@ export default function Chatbot() {
         botResponse = {
           id: (Date.now() + 1).toString(),
           sender: "bot",
-          text: `Thank you for your message! OICA Institute offers certified programs in PGDCA, DCA, Frontend, Backend, DevOps, and Full Stack Development. We are managed by Sanjit Kumar Rautaray (+91 9777735527) at At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019.`,
+          text: `Thank you for your message! OICS Institute offers certified programs in PGDCA, DCA, Frontend, Backend, DevOps, and Full Stack Development. We are managed by Sanjit Kumar Rautaray (+91 9777735527) at At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019.`,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           contactButtons: true,
           options: [
@@ -141,7 +141,7 @@ export default function Chatbot() {
       setIsOpen(false);
       const verifyInput = document.getElementById("certificate-search-input") as HTMLInputElement;
       if (verifyInput) {
-        verifyInput.value = "OICA-2026-CS0001";
+        verifyInput.value = "OICS-2026-CS0001";
         verifyInput.scrollIntoView({ behavior: "smooth" });
         verifyInput.focus();
       } else {
@@ -160,7 +160,7 @@ export default function Chatbot() {
           {/* Welcome Tooltip Badge */}
           <div className="absolute right-0 bottom-16 w-60 p-3 rounded-xl bg-slate-900/95 border border-cyan-500/30 shadow-2xl shadow-cyan-950 backdrop-blur-lg text-slate-200 text-xs flex items-center gap-2.5 animate-bounce">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0 animate-ping" />
-            <span>Need assistance? Chat with <strong>OICA AI Bot</strong> 👋</span>
+            <span>Need assistance? Chat with <strong>OICS AI Bot</strong> 👋</span>
           </div>
 
           <button
@@ -188,7 +188,7 @@ export default function Chatbot() {
               </div>
               <div>
                 <h3 className="font-extrabold text-sm text-white flex items-center gap-1.5 font-mono">
-                  OICA AI Assistant
+                  OICS AI Assistant
                   <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
                 </h3>
                 <p className="text-[11px] text-slate-400">Online • Odisha Institute Support</p>
@@ -233,25 +233,23 @@ export default function Chatbot() {
               >
                 {/* Avatar */}
                 <div
-                  className={`w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-white text-xs font-bold ${
-                    msg.sender === "user"
-                      ? "bg-indigo-600"
-                      : "bg-gradient-to-tr from-cyan-500 to-blue-600"
-                  }`}
+                  className={`w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-white text-xs font-bold ${msg.sender === "user"
+                    ? "bg-indigo-600"
+                    : "bg-gradient-to-tr from-cyan-500 to-blue-600"
+                    }`}
                 >
                   {msg.sender === "user" ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                 </div>
 
                 {/* Message Bubble */}
                 <div
-                  className={`max-w-[80%] rounded-2xl p-3.5 space-y-2 ${
-                    msg.sender === "user"
-                      ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-tr-none shadow-md"
-                      : "bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none shadow-lg"
-                  }`}
+                  className={`max-w-[80%] rounded-2xl p-3.5 space-y-2 ${msg.sender === "user"
+                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-tr-none shadow-md"
+                    : "bg-slate-900 border border-slate-800 text-slate-200 rounded-tl-none shadow-lg"
+                    }`}
                 >
                   <p className="whitespace-pre-line leading-relaxed">{msg.text}</p>
-                  
+
                   {/* Contact Action Buttons inside message if applicable */}
                   {msg.contactButtons && (
                     <div className="pt-2 flex flex-col gap-2">
@@ -307,7 +305,7 @@ export default function Chatbot() {
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse delay-150" />
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse delay-300" />
-                  <span className="ml-1 text-[11px]">OICA Bot is typing...</span>
+                  <span className="ml-1 text-[11px]">OICS Bot is typing...</span>
                 </div>
               </div>
             )}
