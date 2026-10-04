@@ -11,7 +11,7 @@ interface AdminDashboardModalProps {
 }
 
 export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdded }: AdminDashboardModalProps) {
-  const [adminKey, setAdminKey] = useState("SanjitPritam@123");
+  const [adminKey, setAdminKey] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [certificates, setCertificates] = useState<CertificateRecord[]>([]);
   const [loading, setLoading] = useState(false);
@@ -237,7 +237,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                 <Key className="input-icon" />
                 <input
                   type="password"
-                  placeholder="Enter Admin Passcode (Default: SanjitPritam@123)"
+                  placeholder="Enter Admin Security Passcode"
                   value={adminKey}
                   onChange={(e) => setAdminKey(e.target.value)}
                   autoFocus
@@ -247,10 +247,6 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
               <button type="submit" className="btn-primary w-full mt-4">
                 Authenticate Admin Access
               </button>
-              
-              <p className="hint-text mt-3 text-center">
-                💡 Passcode: <code className="bg-slate-800 px-2 py-1 rounded text-cyan-300">SanjitPritam@123</code>
-              </p>
             </form>
           </div>
         ) : (
