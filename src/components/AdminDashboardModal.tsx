@@ -11,7 +11,7 @@ interface AdminDashboardModalProps {
 }
 
 export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdded }: AdminDashboardModalProps) {
-  const [adminKey, setAdminKey] = useState("admin123");
+  const [adminKey, setAdminKey] = useState("SanjitPritam@123");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [certificates, setCertificates] = useState<CertificateRecord[]>([]);
   const [loading, setLoading] = useState(false);
@@ -51,10 +51,10 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
-    const keyToUse = adminKey.trim() || "admin123";
-    const expected = (process.env.NEXT_PUBLIC_ADMIN_KEY || "admin123").trim();
+    const keyToUse = adminKey.trim() || "SanjitPritam@123";
+    const expected = (process.env.NEXT_PUBLIC_ADMIN_KEY || "SanjitPritam@123").trim();
 
-    if (keyToUse === expected || keyToUse === "admin123") {
+    if (keyToUse === expected || keyToUse === "SanjitPritam@123") {
       setAdminKey(keyToUse);
       setIsAuthenticated(true);
       fetchCertificates();
@@ -94,7 +94,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
     try {
       const bodyData = new FormData();
       bodyData.append("file", file);
-      bodyData.append("adminKey", adminKey.trim() || "admin123");
+      bodyData.append("adminKey", adminKey.trim() || "SanjitPritam@123");
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -132,7 +132,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          adminKey: adminKey.trim() || "admin123",
+          adminKey: adminKey.trim() || "SanjitPritam@123",
           certificate: formData
         })
       });
@@ -174,7 +174,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
       const res = await fetch(`/api/certificates?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
         headers: {
-          "x-admin-key": adminKey.trim() || "admin123"
+          "x-admin-key": adminKey.trim() || "SanjitPritam@123"
         }
       });
       if (res.ok) {
@@ -237,7 +237,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                 <Key className="input-icon" />
                 <input
                   type="password"
-                  placeholder="Enter Admin Passcode (Default: admin123)"
+                  placeholder="Enter Admin Passcode (Default: SanjitPritam@123)"
                   value={adminKey}
                   onChange={(e) => setAdminKey(e.target.value)}
                   autoFocus
@@ -249,7 +249,7 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
               </button>
               
               <p className="hint-text mt-3 text-center">
-                💡 Passcode: <code className="bg-slate-800 px-2 py-1 rounded text-cyan-300">admin123</code>
+                💡 Passcode: <code className="bg-slate-800 px-2 py-1 rounded text-cyan-300">SanjitPritam@123</code>
               </p>
             </form>
           </div>

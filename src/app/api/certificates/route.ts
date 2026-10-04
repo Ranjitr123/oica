@@ -31,8 +31,8 @@ export async function POST(request: Request) {
     const cleanKey = (adminKey || "").trim();
 
     // Check admin secret key
-    const expectedKey = (process.env.ADMIN_SECRET_KEY || "admin123").trim();
-    if (cleanKey !== expectedKey && cleanKey !== "admin123") {
+    const expectedKey = (process.env.ADMIN_SECRET_KEY || "SanjitPritam@123").trim();
+    if (cleanKey !== expectedKey && cleanKey !== "SanjitPritam@123") {
       return NextResponse.json({ error: "Invalid Admin Security Key. Access Denied." }, { status: 401 });
     }
 
@@ -77,8 +77,8 @@ export async function DELETE(request: Request) {
     const id = searchParams.get("id") || searchParams.get("number");
     const adminKey = (request.headers.get("x-admin-key") || "").trim();
 
-    const expectedKey = (process.env.ADMIN_SECRET_KEY || "admin123").trim();
-    if (adminKey !== expectedKey && adminKey !== "admin123") {
+    const expectedKey = (process.env.ADMIN_SECRET_KEY || "SanjitPritam@123").trim();
+    if (adminKey !== expectedKey && adminKey !== "SanjitPritam@123") {
       return NextResponse.json({ error: "Invalid Admin Security Key" }, { status: 401 });
     }
 

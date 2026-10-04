@@ -8,10 +8,10 @@ export async function POST(request: Request) {
     const file = formData.get("file") as File | null;
     const adminKey = (formData.get("adminKey") as string | null)?.trim() || "";
 
-    const expectedKey = (process.env.ADMIN_SECRET_KEY || "admin123").trim();
+    const expectedKey = (process.env.ADMIN_SECRET_KEY || "SanjitPritam@123").trim();
 
-    if (adminKey !== expectedKey && adminKey !== "admin123") {
-      return NextResponse.json({ error: "Invalid Admin Security Key. (Default: admin123)" }, { status: 401 });
+    if (adminKey !== expectedKey && adminKey !== "SanjitPritam@123") {
+      return NextResponse.json({ error: "Invalid Admin Security Key. (Default: SanjitPritam@123)" }, { status: 401 });
     }
 
     if (!file) {
