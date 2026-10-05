@@ -7,6 +7,7 @@ import Hero from "@/components/Hero";
 import VerificationSection from "@/components/VerificationSection";
 import Courses from "@/components/Courses";
 import Features from "@/components/Features";
+import AdmissionForm from "@/components/AdmissionForm";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
 
@@ -52,6 +53,7 @@ function PageContent() {
           refreshTrigger={refreshKey}
         />
         <Courses />
+        <AdmissionForm />
         <Features />
       </main>
 

@@ -40,6 +40,10 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
               <BookOpen className="w-4 h-4 text-blue-400" />
               <span>Certified Courses</span>
             </a>
+            <a href="#admission" className="hover:text-emerald-400 transition-colors flex items-center gap-1.5 text-emerald-300">
+              <Sparkles className="w-4 h-4 text-emerald-400" />
+              <span>Online Admission</span>
+            </a>
             <a href="#features" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-indigo-400" />
               <span>Why Choose OICS</span>

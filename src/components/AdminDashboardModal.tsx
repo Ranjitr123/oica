@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Lock, LogOut, Trash2, Shield, AlertCircle, CheckCircle, RefreshCw, Key, FilePlus, Database, Search, Sparkles, Upload, FileText } from "lucide-react";
+import { Lock, LogOut, Trash2, Shield, AlertCircle, CheckCircle, RefreshCw, Key, FilePlus, Database, Search, Sparkles, Upload, FileText, FileSpreadsheet, Download, Mail, Phone, User, Calendar, MapPin } from "lucide-react";
 import { CertificateRecord } from "@/data/certificatesData";
+import { AdmissionRecord } from "@/lib/excelStore";
 
 interface AdminDashboardModalProps {
   isOpen: boolean;
@@ -14,12 +15,15 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
   const [adminKey, setAdminKey] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [certificates, setCertificates] = useState<CertificateRecord[]>([]);
+  const [submissions, setSubmissions] = useState<AdmissionRecord[]>([]);
+  const [loadingSubmissions, setLoadingSubmissions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeTab, setActiveTab] = useState<"list" | "create" | "database">("list");
+  const [submissionSearch, setSubmissionSearch] = useState("");
+  const [activeTab, setActiveTab] = useState<"list" | "create" | "database" | "submissions">("list");
   const [dbSource, setDbSource] = useState<string>("supabase");
 
   // Form fields for new certificate
@@ -50,9 +54,25 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
         setIsAuthenticated(true);
         setAdminKey(savedKey);
         fetchCertificates();
+        fetchSubmissions();
       }
     }
   }, [isOpen]);
+
+  const fetchSubmissions = async () => {
+    setLoadingSubmissions(true);
+    try {
+      const res = await fetch("/api/admission");
+      const data = await res.json();
+      if (res.ok && data.data) {
+        setSubmissions(data.data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch submissions:", err);
+    } finally {
+      setLoadingSubmissions(false);
+    }
+  };
 
   // Generate 4-digit padded sequential certificate ID (e.g., OICS-2026-CS0001)
   const generateAutoCertNumber = (existingCerts: CertificateRecord[] = certificates) => {
@@ -314,6 +334,15 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                 }}
               >
                 <FilePlus className="w-4 h-4" /> Upload New Certificate PDF
+              </button>
+              <button
+                className={`tab-btn ${activeTab === "submissions" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveTab("submissions");
+                  fetchSubmissions();
+                }}
+              >
+                <FileSpreadsheet className="w-4 h-4" /> Admissions & Excel ({submissions.length})
               </button>
               <button
                 className={`tab-btn ${activeTab === "database" ? "active" : ""}`}
@@ -589,6 +618,147 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
               </div>
             )}
 
+            {/* TAB 4: Admission Submissions */}
+            {activeTab === "submissions" && (
+              <div className="tab-content space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+                  <div>
+                    <h4 className="font-bold text-white text-base flex items-center gap-2">
+                      <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
+                      Student Admission Applications
+                    </h4>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      All registered student leads are automatically stored in server Excel sheet (<code>data/submissions.xlsx</code>).
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={fetchSubmissions}
+                      disabled={loadingSubmissions}
+                      className="px-3 py-2 text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg flex items-center gap-1.5 transition-colors"
+                      title="Refresh List"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${loadingSubmissions ? "animate-spin" : ""}`} />
+                      Refresh
+                    </button>
+                    <a
+                      href="/api/admission/export"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg flex items-center gap-2 shadow-lg shadow-emerald-600/20 transition-all cursor-pointer"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download Excel Sheet (.xlsx)
+                    </a>
+                  </div>
+                </div>
+
+                {/* Submissions Search */}
+                <div className="search-box">
+                  <Search className="w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="Search submissions by student name, email, phone, or course..."
+                    value={submissionSearch}
+                    onChange={(e) => setSubmissionSearch(e.target.value)}
+                  />
+                </div>
+
+                {/* Table */}
+                <div className="admin-table-container">
+                  {loadingSubmissions ? (
+                    <div className="text-center py-12 text-slate-400">
+                      <RefreshCw className="w-8 h-8 animate-spin mx-auto text-emerald-400 mb-2" />
+                      <span>Loading Student Submissions...</span>
+                    </div>
+                  ) : (
+                    (() => {
+                      const filteredSubmissions = submissions.filter(
+                        (s) =>
+                          s.fullName.toLowerCase().includes(submissionSearch.toLowerCase()) ||
+                          s.email.toLowerCase().includes(submissionSearch.toLowerCase()) ||
+                          s.phone.includes(submissionSearch) ||
+                          s.course.toLowerCase().includes(submissionSearch.toLowerCase()) ||
+                          s.id.toLowerCase().includes(submissionSearch.toLowerCase())
+                      );
+
+                      if (filteredSubmissions.length === 0) {
+                        return (
+                          <div className="text-center py-12 text-slate-400">
+                            <FileSpreadsheet className="w-12 h-12 mx-auto text-slate-600 mb-3" />
+                            <p className="font-semibold text-slate-300">No Admission Submissions Found</p>
+                            <p className="text-xs text-slate-500 mt-1">Submit an admission form on the homepage to populate this table.</p>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <table className="admin-table text-xs">
+                          <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Date</th>
+                              <th>Student Name</th>
+                              <th>Contact</th>
+                              <th>Course Selected</th>
+                              <th>Qualification</th>
+                              <th>Address & Remarks</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {filteredSubmissions.map((sub) => (
+                              <tr key={sub.id}>
+                                <td>
+                                  <span className="font-mono font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                                    {sub.id}
+                                  </span>
+                                </td>
+                                <td className="whitespace-nowrap text-slate-400">
+                                  {new Date(sub.submittedAt).toLocaleDateString("en-IN", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  })}
+                                </td>
+                                <td>
+                                  <div className="font-bold text-slate-200">{sub.fullName}</div>
+                                </td>
+                                <td>
+                                  <div className="flex flex-col gap-0.5">
+                                    <span className="text-slate-300 flex items-center gap-1">
+                                      <Mail className="w-3 h-3 text-blue-400" />
+                                      {sub.email}
+                                    </span>
+                                    <span className="text-emerald-400 flex items-center gap-1 font-mono">
+                                      <Phone className="w-3 h-3 text-emerald-400" />
+                                      {sub.phone}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <span className="font-semibold text-amber-300">{sub.course}</span>
+                                </td>
+                                <td>{sub.qualification || "—"}</td>
+                                <td>
+                                  <div className="max-w-xs truncate text-slate-300" title={`${sub.address || ''} | ${sub.message || ''}`}>
+                                    {sub.address || sub.message ? (
+                                      <span>{sub.address} {sub.message ? `(${sub.message})` : ''}</span>
+                                    ) : (
+                                      <span className="text-slate-500">—</span>
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      );
+                    })()
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* TAB 3: Database Info */}
             {activeTab === "database" && (
               <div className="tab-content space-y-4">
@@ -596,11 +766,11 @@ export default function AdminDashboardModal({ isOpen, onClose, onCertificateAdde
                   <h4>
                     Active Storage Mode:{" "}
                     <span className="text-cyan-400 font-mono underline">
-                      Online Free Cloud Supabase
+                      Online Free Cloud Supabase + Local Excel Store
                     </span>
                   </h4>
                   <p className="text-sm text-slate-300 mt-2">
-                    PDF files uploaded by admin are stored in your online Supabase Cloud Storage bucket <code className="text-amber-300">certificates</code> and database table <code className="text-amber-300">public.certificates</code>!
+                    PDF files uploaded by admin are stored in your online Supabase Cloud Storage bucket <code className="text-amber-300">certificates</code>. Student admissions are stored in <code className="text-emerald-300">data/submissions.xlsx</code>!
                   </p>
                 </div>
               </div>
