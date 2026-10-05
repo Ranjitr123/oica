@@ -45,7 +45,7 @@ export default function PaymentModal({
   const [activeTab, setActiveTab] = useState<"upi" | "razorpay">("upi");
   const [amount, setAmount] = useState<number>(initialAmount);
   const [isCustomAmount, setIsCustomAmount] = useState<boolean>(false);
-  const [upiId] = useState<string>(process.env.NEXT_PUBLIC_INSTITUTE_UPI_ID || "9777735527@ybl"); // Configurable UPI ID
+  const [upiId] = useState<string>(process.env.NEXT_PUBLIC_INSTITUTE_UPI_ID || "ranjitrautaray475@axl"); // Configurable UPI ID
   const [utrNumber, setUtrNumber] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
