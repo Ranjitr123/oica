@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Award, ShieldCheck, Search, Lock, BookOpen, Sparkles, Phone, MessageCircle } from "lucide-react";
+import { Award, ShieldCheck, Search, Lock, BookOpen, Sparkles, Phone, MessageCircle, CreditCard } from "lucide-react";
 import AdminDashboardModal from "./AdminDashboardModal";
+import PaymentModal from "./PaymentModal";
 
 interface HeaderProps {
   onSearchClick: () => void;
@@ -11,6 +12,7 @@ interface HeaderProps {
 
 export default function Header({ onSearchClick, onCertificateAdded }: HeaderProps) {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
   return (
     <>
@@ -52,12 +54,21 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
 
           {/* Action CTA Buttons */}
           <div className="flex items-center space-x-1 sm:space-x-2.5 shrink-0">
+            <button
+              onClick={() => setIsPaymentOpen(true)}
+              className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-1 transition-all shrink-0 active:scale-95 cursor-pointer"
+              title="Pay Course / Admission Fee Online"
+            >
+              <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Pay Online</span>
+            </button>
+
             <a
               href="tel:9777735527"
-              className="p-1.5 sm:p-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 text-xs font-semibold flex items-center gap-1 transition-all shrink-0"
+              className="p-1.5 sm:p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition-all shrink-0"
               title="Call Sanjit Kumar Rautaray (9777735527)"
             >
-              <Phone className="w-3.5 h-3.5" />
+              <Phone className="w-3.5 h-3.5 text-blue-400" />
               <span className="hidden lg:inline">9777735527</span>
             </a>
 
@@ -97,6 +108,12 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}
         onCertificateAdded={onCertificateAdded}
+      />
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
       />
     </>
   );

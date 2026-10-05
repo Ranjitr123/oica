@@ -17,8 +17,10 @@ import {
   Award,
   Clock,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
+  IndianRupee
 } from "lucide-react";
+import PaymentModal from "./PaymentModal";
 
 const COURSES_LIST = [
   "Post Graduate Diploma in Computer Applications (PGDCA)",
@@ -42,6 +44,7 @@ const QUALIFICATIONS_LIST = [
 ];
 
 export default function AdmissionForm() {
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -239,13 +242,24 @@ export default function AdmissionForm() {
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => setSuccessData(null)}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-medium transition-all shadow-md"
-                  >
-                    <RefreshCw className="w-4 h-4" />
-                    Submit Another Application
-                  </button>
+                  {/* Payment CTA */}
+                  <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                      onClick={() => setIsPaymentOpen(true)}
+                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-bold transition-all shadow-lg shadow-emerald-600/25 cursor-pointer"
+                    >
+                      <IndianRupee className="w-5 h-5" />
+                      <span>Pay Seat Booking Fee Online (₹500)</span>
+                    </button>
+
+                    <button
+                      onClick={() => setSuccessData(null)}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-medium transition-all shadow-md"
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      Submit Another
+                    </button>
+                  </div>
                 </div>
               ) : (
                 /* Application Form */
@@ -425,6 +439,16 @@ export default function AdmissionForm() {
           </div>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      <PaymentModal
+        isOpen={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
+        submissionId={successData?.submissionId}
+        studentName={successData?.studentName}
+        email={successData?.email}
+        courseName={successData?.course}
+      />
     </section>
   );
 }
