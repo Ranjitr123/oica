@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getExcelBuffer } from "@/lib/excelStore";
+import { getExcelBufferAsync } from "@/lib/excelStore";
 
 export async function GET() {
   try {
-    const excelBuffer = getExcelBuffer();
+    const excelBuffer = await getExcelBufferAsync();
 
     return new Response(new Uint8Array(excelBuffer), {
       status: 200,

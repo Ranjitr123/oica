@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { addSubmission, getAllSubmissions } from "@/lib/excelStore";
+import { addSubmissionAsync, getAllSubmissionsAsync } from "@/lib/excelStore";
 import { sendAdmissionNotification } from "@/lib/email";
 
 export async function POST(request: Request) {
@@ -33,8 +33,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. Add submission to Excel sheet & JSON store
-    const record = addSubmission({
+    // 1. Add submission to Supabase Cloud, Excel sheet & JSON store
+    const record = await addSubmissionAsync({
       fullName: fullName.trim(),
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const records = getAllSubmissions();
+    const records = await getAllSubmissionsAsync();
     return NextResponse.json({
       success: true,
       count: records.length,

@@ -1,5 +1,5 @@
 -- ========================================================
--- Complete Supabase Setup SQL for ApexTech Computer Institute
+-- Complete Supabase Setup SQL for Odisha Institute of Computer Applications (OICA)
 -- Copy & Run this SQL script in Supabase SQL Editor
 -- ========================================================
 
@@ -24,15 +24,31 @@ CREATE TABLE IF NOT EXISTS public.certificates (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 2. Turn OFF Row Level Security (RLS) so Admin API inserts are never blocked!
-ALTER TABLE public.certificates DISABLE ROW LEVEL SECURITY;
+-- 2. Create Student Admissions Table
+CREATE TABLE IF NOT EXISTS public.admissions (
+  id TEXT PRIMARY KEY,
+  submission_id TEXT UNIQUE NOT NULL,
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  course TEXT NOT NULL,
+  qualification TEXT,
+  address TEXT,
+  message TEXT,
+  status TEXT DEFAULT 'NEW',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
 
--- 3. Create Free Storage Bucket named 'certificates' for PDF Files
+-- 3. Turn OFF Row Level Security (RLS) so Admin API inserts are never blocked!
+ALTER TABLE public.certificates DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.admissions DISABLE ROW LEVEL SECURITY;
+
+-- 4. Create Free Storage Bucket named 'certificates' for PDF Files
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('certificates', 'certificates', true)
 ON CONFLICT (id) DO NOTHING;
 
--- 4. Storage Bucket Security Policies (Allow Public PDF Downloads & Admin Uploads)
+-- 5. Storage Bucket Security Policies (Allow Public PDF Downloads & Admin Uploads)
 CREATE POLICY "Public PDF Storage Read Access" 
 ON storage.objects FOR SELECT 
 USING (bucket_id = 'certificates');

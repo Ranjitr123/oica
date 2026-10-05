@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import * as XLSX from "xlsx";
+import { supabase, isSupabaseConfigured } from "./supabase";
 
 export interface AdmissionRecord {
   id: string;
@@ -26,9 +27,9 @@ function ensureDataDir() {
 }
 
 /**
- * Reads all admission records from JSON storage (fallback to empty list)
+ * Reads all admission records from local JSON store
  */
-export function getAllSubmissions(): AdmissionRecord[] {
+function getLocalSubmissions(): AdmissionRecord[] {
   ensureDataDir();
   try {
     if (fs.existsSync(JSON_FILE)) {
@@ -39,6 +40,46 @@ export function getAllSubmissions(): AdmissionRecord[] {
     console.error("Error reading JSON submissions:", err);
   }
   return [];
+}
+
+/**
+ * Reads all admission records from Supabase Cloud DB (if configured) or local JSON store
+ */
+export async function getAllSubmissionsAsync(): Promise<AdmissionRecord[]> {
+  const localData = getLocalSubmissions();
+
+  if (isSupabaseConfigured && supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("admissions")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        const mapped: AdmissionRecord[] = data.map((item: any) => ({
+          id: item.submission_id || item.id,
+          submittedAt: item.created_at || new Date().toISOString(),
+          fullName: item.full_name,
+          email: item.email,
+          phone: item.phone,
+          course: item.course,
+          qualification: item.qualification || "",
+          address: item.address || "",
+          message: item.message || "",
+          status: item.status || "NEW",
+        }));
+        return mapped;
+      }
+    } catch (err) {
+      console.warn("Supabase fetch admissions exception, using local store:", err);
+    }
+  }
+
+  return localData;
+}
+
+export function getAllSubmissions(): AdmissionRecord[] {
+  return getLocalSubmissions();
 }
 
 /**
@@ -115,24 +156,101 @@ export function saveSubmissionsAndSyncExcel(records: AdmissionRecord[]) {
 }
 
 /**
- * Adds a new student admission submission and updates both JSON & Excel
+ * Adds a new student admission submission and updates Supabase, JSON & Excel
  */
-export function addSubmission(
+export async function addSubmissionAsync(
   input: Omit<AdmissionRecord, "id" | "submittedAt" | "status">
-): AdmissionRecord {
-  const records = getAllSubmissions();
+): Promise<AdmissionRecord> {
+  const records = getLocalSubmissions();
+
+  const subId = `ADM-${Date.now().toString().slice(-6)}`;
+  const nowIso = new Date().toISOString();
 
   const newRecord: AdmissionRecord = {
     ...input,
-    id: `ADM-${Date.now().toString().slice(-6)}`,
-    submittedAt: new Date().toISOString(),
+    id: subId,
+    submittedAt: nowIso,
     status: "NEW",
   };
 
-  records.unshift(newRecord); // Place newest at top
+  // 1. Save locally
+  records.unshift(newRecord);
   saveSubmissionsAndSyncExcel(records);
 
-  // Synchronously forward to Google Sheets App Script if webhook URL is configured
+  // 2. Save to Supabase Cloud Database (if configured)
+  if (isSupabaseConfigured && supabase) {
+    try {
+      await supabase.from("admissions").insert([
+        {
+          id: subId,
+          submission_id: subId,
+          full_name: input.fullName,
+          email: input.email,
+          phone: input.phone,
+          course: input.course,
+          qualification: input.qualification || "",
+          address: input.address || "",
+          message: input.message || "",
+          status: "NEW",
+          created_at: nowIso,
+        },
+      ]);
+    } catch (err) {
+      console.warn("Supabase admissions insert warning (saved locally):", err);
+    }
+  }
+
+  // 3. Synchronously forward to Google Sheets App Script if webhook URL is configured
+  sendToGoogleSheets(newRecord).catch((err) =>
+    console.warn("Google Sheets AppScript dispatch error:", err)
+  );
+
+  return newRecord;
+}
+
+export function addSubmission(
+  input: Omit<AdmissionRecord, "id" | "submittedAt" | "status">
+): AdmissionRecord {
+  const records = getLocalSubmissions();
+
+  const subId = `ADM-${Date.now().toString().slice(-6)}`;
+  const nowIso = new Date().toISOString();
+
+  const newRecord: AdmissionRecord = {
+    ...input,
+    id: subId,
+    submittedAt: nowIso,
+    status: "NEW",
+  };
+
+  records.unshift(newRecord);
+  saveSubmissionsAndSyncExcel(records);
+
+  // Async insert to Supabase & Google Sheets
+  if (isSupabaseConfigured && supabase) {
+    (async () => {
+      try {
+        await supabase.from("admissions").insert([
+          {
+            id: subId,
+            submission_id: subId,
+            full_name: input.fullName,
+            email: input.email,
+            phone: input.phone,
+            course: input.course,
+            qualification: input.qualification || "",
+            address: input.address || "",
+            message: input.message || "",
+            status: "NEW",
+            created_at: nowIso,
+          },
+        ]);
+      } catch (err) {
+        console.warn("Supabase insert async warning:", err);
+      }
+    })();
+  }
+
   sendToGoogleSheets(newRecord).catch((err) =>
     console.warn("Google Sheets AppScript dispatch error:", err)
   );
@@ -143,8 +261,66 @@ export function addSubmission(
 /**
  * Generates and returns a fresh Excel Buffer dynamically using SheetJS
  */
+export async function getExcelBufferAsync(): Promise<Buffer> {
+  const records = await getAllSubmissionsAsync();
+
+  const excelRows = records.map((rec) => ({
+    "Submission ID": rec.id,
+    "Date & Time": new Date(rec.submittedAt).toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      dateStyle: "medium",
+      timeStyle: "short",
+    }),
+    "Full Name": rec.fullName,
+    "Email Address": rec.email,
+    "Phone / WhatsApp": rec.phone,
+    "Course": rec.course,
+    "Qualification": rec.qualification || "N/A",
+    "Address": rec.address || "N/A",
+    "Message / Remarks": rec.message || "N/A",
+    "Status": rec.status || "NEW",
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(
+    excelRows.length > 0
+      ? excelRows
+      : [
+          {
+            "Submission ID": "N/A",
+            "Date & Time": "-",
+            "Full Name": "No Submissions Yet",
+            "Email Address": "-",
+            "Phone / WhatsApp": "-",
+            "Course": "-",
+            "Qualification": "-",
+            "Address": "-",
+            "Message / Remarks": "-",
+            "Status": "-",
+          },
+        ]
+  );
+
+  worksheet["!cols"] = [
+    { wch: 18 },
+    { wch: 22 },
+    { wch: 24 },
+    { wch: 28 },
+    { wch: 16 },
+    { wch: 30 },
+    { wch: 18 },
+    { wch: 35 },
+    { wch: 35 },
+    { wch: 12 },
+  ];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Submissions");
+
+  return XLSX.write(workbook, { type: "buffer", bookType: "xlsx" });
+}
+
 export function getExcelBuffer(): Buffer {
-  const records = getAllSubmissions();
+  const records = getLocalSubmissions();
 
   const excelRows = records.map((rec) => ({
     "Submission ID": rec.id,
@@ -204,7 +380,7 @@ export function getExcelBuffer(): Buffer {
 export function getExcelFilePath(): string {
   ensureDataDir();
   if (!fs.existsSync(EXCEL_FILE)) {
-    const records = getAllSubmissions();
+    const records = getLocalSubmissions();
     saveSubmissionsAndSyncExcel(records);
   }
   return EXCEL_FILE;
@@ -235,9 +411,10 @@ export async function sendToGoogleSheets(record: AdmissionRecord) {
       status: record.status || "NEW",
     };
 
+    // Google Apps Script requires text/plain to prevent CORS preflight blocking
     await fetch(webhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload),
     });
   } catch (err) {
