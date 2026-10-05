@@ -44,7 +44,8 @@ export default function PaymentModal({
 }: PaymentModalProps) {
   const [activeTab, setActiveTab] = useState<"upi" | "razorpay">("upi");
   const [amount, setAmount] = useState<number>(initialAmount);
-  const [upiId] = useState<string>("9777735527@ybl"); // Default PhonePe/GPay UPI ID
+  const [isCustomAmount, setIsCustomAmount] = useState<boolean>(false);
+  const [upiId] = useState<string>(process.env.NEXT_PUBLIC_INSTITUTE_UPI_ID || "9777735527@ybl"); // Configurable UPI ID
   const [utrNumber, setUtrNumber] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -276,44 +277,84 @@ export default function PaymentModal({
           <div className="p-6 space-y-5">
             {/* Fee Amount Selection */}
             <div>
-              <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-                Select Amount to Pay
-              </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                  Select or Enter Amount (₹)
+                </label>
+                <span className="text-xs font-bold text-emerald-400 font-mono">
+                  Paying: ₹{amount}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-4 gap-1.5 mb-2">
                 <button
                   type="button"
-                  onClick={() => setAmount(500)}
-                  className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all ${
-                    amount === 500
+                  onClick={() => {
+                    setAmount(500);
+                    setIsCustomAmount(false);
+                  }}
+                  className={`py-2 px-2 rounded-xl border text-xs font-bold transition-all ${
+                    !isCustomAmount && amount === 500
                       ? "bg-emerald-600/20 border-emerald-500 text-emerald-300 shadow-md"
                       : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750"
                   }`}
                 >
-                  ₹500 (Booking Fee)
+                  ₹500
                 </button>
                 <button
                   type="button"
-                  onClick={() => setAmount(1000)}
-                  className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all ${
-                    amount === 1000
+                  onClick={() => {
+                    setAmount(1000);
+                    setIsCustomAmount(false);
+                  }}
+                  className={`py-2 px-2 rounded-xl border text-xs font-bold transition-all ${
+                    !isCustomAmount && amount === 1000
                       ? "bg-emerald-600/20 border-emerald-500 text-emerald-300 shadow-md"
                       : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750"
                   }`}
                 >
-                  ₹1,000 (Deposit)
+                  ₹1,000
                 </button>
                 <button
                   type="button"
-                  onClick={() => setAmount(2500)}
-                  className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all ${
-                    amount === 2500
+                  onClick={() => {
+                    setAmount(2500);
+                    setIsCustomAmount(false);
+                  }}
+                  className={`py-2 px-2 rounded-xl border text-xs font-bold transition-all ${
+                    !isCustomAmount && amount === 2500
                       ? "bg-emerald-600/20 border-emerald-500 text-emerald-300 shadow-md"
                       : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750"
                   }`}
                 >
-                  ₹2,500 (Part Fee)
+                  ₹2,500
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsCustomAmount(true)}
+                  className={`py-2 px-2 rounded-xl border text-xs font-bold transition-all ${
+                    isCustomAmount
+                      ? "bg-emerald-600/20 border-emerald-500 text-emerald-300 shadow-md"
+                      : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750"
+                  }`}
+                >
+                  Custom
                 </button>
               </div>
+
+              {isCustomAmount && (
+                <div className="relative mt-2 animate-fadeIn">
+                  <div className="absolute left-3 top-2.5 text-slate-400 font-bold text-sm">₹</div>
+                  <input
+                    type="number"
+                    min="1"
+                    placeholder="Enter Custom Amount (e.g. 1500)"
+                    value={amount}
+                    onChange={(e) => setAmount(Math.max(1, Number(e.target.value)))}
+                    className="w-full bg-slate-950 border border-emerald-500/60 rounded-xl pl-8 pr-4 py-2 text-sm text-emerald-300 font-bold font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Payment Method Tabs */}

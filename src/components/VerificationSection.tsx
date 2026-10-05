@@ -94,19 +94,21 @@ export default function VerificationSection({ initialCertNumber = "", refreshTri
       <div className="max-w-2xl mx-auto mb-10">
         <form onSubmit={handleSubmit} className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 rounded-2xl blur-md opacity-40 group-hover:opacity-75 transition duration-500"></div>
-          <div className="relative flex items-center bg-slate-900 border border-slate-700/80 rounded-xl p-2 shadow-2xl">
-            <Search className="w-6 h-6 text-slate-400 ml-3 shrink-0" />
-            <input
-              type="text"
-              placeholder="Enter Certificate Number (e.g. OICS-2026-CS8942)"
-              value={certNoInput}
-              onChange={(e) => setCertNoInput(e.target.value)}
-              className="w-full bg-transparent px-4 py-3 text-white text-base focus:outline-none placeholder-slate-500 font-mono tracking-wide"
-            />
+          <div className="relative flex flex-col xs:flex-row items-stretch xs:items-center bg-slate-900 border border-slate-700/80 rounded-xl p-1.5 sm:p-2 shadow-2xl gap-2 xs:gap-0">
+            <div className="flex items-center flex-1 min-w-0">
+              <Search className="w-5 h-5 text-slate-400 ml-2.5 shrink-0" />
+              <input
+                type="text"
+                placeholder="Certificate No. (e.g. OICS-2026-CS8942)"
+                value={certNoInput}
+                onChange={(e) => setCertNoInput(e.target.value)}
+                className="w-full bg-transparent px-3 py-2.5 sm:py-3 text-white text-xs sm:text-base focus:outline-none placeholder-slate-500 font-mono tracking-wide min-w-0"
+              />
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="btn-primary shrink-0 py-3 px-6 text-sm font-semibold rounded-lg flex items-center space-x-2"
+              className="btn-primary shrink-0 py-2.5 sm:py-3 px-4 sm:px-6 text-xs sm:text-sm font-semibold rounded-lg flex items-center justify-center space-x-2"
             >
               {loading ? (
                 <>

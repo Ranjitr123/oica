@@ -25,10 +25,10 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
             </div>
             <div className="min-w-0">
               <div className="flex items-center space-x-1 sm:space-x-1.5">
-                <span className="font-extrabold text-sm sm:text-xl tracking-tight text-white font-mono">OICS</span>
-                <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider px-1 sm:px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">ISO 9001</span>
+                <span className="font-extrabold text-xs sm:text-xl tracking-tight text-white font-mono">OICS</span>
+                <span className="text-[7px] sm:text-[10px] uppercase font-bold tracking-wider px-1 sm:px-1.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shrink-0">ISO 9001</span>
               </div>
-              <p className="text-[9px] sm:text-xs text-slate-400 font-medium truncate max-w-[95px] xs:max-w-[140px] sm:max-w-none">Odisha Institute of Computer Studies</p>
+              <p className="text-[8px] sm:text-xs text-slate-400 font-medium truncate max-w-[70px] xs:max-w-[120px] sm:max-w-none">Odisha Institute of Computer Studies</p>
             </div>
           </div>
 
@@ -53,14 +53,14 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
           </nav>
 
           {/* Action CTA Buttons */}
-          <div className="flex items-center space-x-1 sm:space-x-2.5 shrink-0">
+          <div className="flex items-center space-x-1 sm:space-x-2 shrink-0">
             <button
               onClick={() => setIsPaymentOpen(true)}
-              className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-1 transition-all shrink-0 active:scale-95 cursor-pointer"
+              className="px-1.5 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] sm:text-xs font-bold flex items-center gap-1 transition-all shrink-0 active:scale-95 cursor-pointer"
               title="Pay Course / Admission Fee Online"
             >
-              <CreditCard className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Pay Online</span>
+              <CreditCard className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Pay<span className="hidden sm:inline"> Online</span></span>
             </button>
 
             <a
@@ -68,7 +68,7 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
               className="p-1.5 sm:p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center gap-1 transition-all shrink-0"
               title="Call Sanjit Kumar Rautaray (9777735527)"
             >
-              <Phone className="w-3.5 h-3.5 text-blue-400" />
+              <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
               <span className="hidden lg:inline">9777735527</span>
             </a>
 
@@ -79,7 +79,7 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
               className="p-1.5 sm:p-2 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/20 text-xs font-semibold flex items-center gap-1 transition-all shrink-0"
               title="WhatsApp Chat"
             >
-              <MessageCircle className="w-3.5 h-3.5" />
+              <MessageCircle className="w-3.5 h-3.5 shrink-0" />
               <span className="hidden lg:inline">WhatsApp</span>
             </a>
 
@@ -88,15 +88,15 @@ export default function Header({ onSearchClick, onCertificateAdded }: HeaderProp
               className="p-1.5 sm:px-3 sm:py-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center space-x-1 transition-all shadow-sm shrink-0"
               title="Verify Certificate"
             >
-              <Search className="w-3.5 h-3.5 text-cyan-400" />
+              <Search className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
               <span className="hidden sm:inline">Verify</span>
             </button>
 
             <button
               onClick={() => setIsAdminOpen(true)}
-              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs flex items-center space-x-1 sm:space-x-1.5 shadow-md shadow-cyan-500/20 shrink-0 active:scale-95 transition-all"
+              className="px-2 xs:px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-[11px] sm:text-xs flex items-center space-x-1 sm:space-x-1.5 shadow-md shadow-cyan-500/20 shrink-0 active:scale-95 transition-all"
             >
-              <Lock className="w-3.5 h-3.5" />
+              <Lock className="w-3.5 h-3.5 shrink-0" />
               <span>Admin</span>
             </button>
           </div>

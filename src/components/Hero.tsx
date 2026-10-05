@@ -50,18 +50,18 @@ export default function Hero({ onVerifyClick }: HeroProps) {
                 <span><strong>Address:</strong> At- Nanapada, PO/PS- Nirakarpur, Dist- Khrodha, PIN- 752019</span>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/60">
-                <div className="flex items-center gap-2">
-                  <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-slate-800/60">
+                <div className="flex items-center gap-1.5">
+                  <UserCheck className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                   <span><strong>Managed by:</strong> Sanjit Kumar Rautaray</span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <a
                     href={`tel:${phoneNumber}`}
-                    className="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1.5 transition-all"
+                    className="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1 text-[11px] sm:text-xs transition-all"
                   >
-                    <Phone className="w-3 h-3" />
+                    <Phone className="w-3 h-3 shrink-0" />
                     <span>Call: {phoneNumber}</span>
                   </a>
 
@@ -69,9 +69,9 @@ export default function Hero({ onVerifyClick }: HeroProps) {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1 rounded bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold flex items-center gap-1.5 transition-all"
+                    className="px-2.5 py-1 rounded bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-extrabold flex items-center gap-1 text-[11px] sm:text-xs transition-all"
                   >
-                    <MessageCircle className="w-3 h-3" />
+                    <MessageCircle className="w-3 h-3 shrink-0" />
                     <span>WhatsApp</span>
                   </a>
                 </div>
