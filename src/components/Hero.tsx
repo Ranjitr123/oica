@@ -1,13 +1,15 @@
 "use client";
 
-import React from "react";
-import { ShieldCheck, Award, GraduationCap, CheckCircle2, ArrowRight, Sparkles, Server, Zap, Phone, MessageCircle, MapPin, UserCheck } from "lucide-react";
+import React, { useState } from "react";
+import { ShieldCheck, Award, GraduationCap, CheckCircle2, ArrowRight, Sparkles, Server, Zap, Phone, MessageCircle, MapPin, UserCheck, Smartphone, Download } from "lucide-react";
+import DownloadAppModal from "./DownloadAppModal";
 
 interface HeroProps {
   onVerifyClick: () => void;
 }
 
 export default function Hero({ onVerifyClick }: HeroProps) {
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
   const phoneNumber = "9777735527";
   const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${encodeURIComponent("Hello OICS Institute, I would like to inquire about courses/certificates.")}`;
 
@@ -79,19 +81,27 @@ export default function Hero({ onVerifyClick }: HeroProps) {
             </div>
 
             {/* CTA Buttons */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="pt-2 flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
               <button
                 onClick={onVerifyClick}
-                className="btn-primary w-full sm:w-auto px-8 py-4 text-base font-bold rounded-xl flex items-center justify-center space-x-3 shadow-lg shadow-cyan-500/25"
+                className="btn-primary w-full sm:w-auto px-7 py-3.5 text-sm sm:text-base font-bold rounded-xl flex items-center justify-center space-x-2.5 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
               >
                 <ShieldCheck className="w-5 h-5 text-cyan-200" />
-                <span>Verify Certificate Now</span>
+                <span>Verify Certificate</span>
                 <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => setIsDownloadOpen(true)}
+                className="w-full sm:w-auto px-6 py-3.5 text-sm sm:text-base font-bold rounded-xl flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-blue-500/20 hover:from-emerald-500/30 hover:to-cyan-500/30 text-emerald-300 border border-emerald-500/40 shadow-lg shadow-emerald-500/10 active:scale-95 transition-all cursor-pointer"
+              >
+                <Smartphone className="w-5 h-5 text-emerald-400" />
+                <span>Download App (.apk)</span>
               </button>
 
               <a
                 href="#courses"
-                className="btn-secondary w-full sm:w-auto px-7 py-4 text-base font-semibold rounded-xl flex items-center justify-center space-x-2"
+                className="btn-secondary w-full sm:w-auto px-6 py-3.5 text-sm sm:text-base font-semibold rounded-xl flex items-center justify-center space-x-2"
               >
                 <GraduationCap className="w-5 h-5 text-indigo-400" />
                 <span>Explore Courses</span>
@@ -120,7 +130,7 @@ export default function Hero({ onVerifyClick }: HeroProps) {
             <div className="relative mx-auto max-w-md lg:max-w-none">
               <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-600 rounded-3xl blur-xl opacity-50 animate-pulse"></div>
 
-              <div className="relative bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-5">
+              <div className="relative bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 shadow-2xl backdrop-blur-xl space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -156,6 +166,27 @@ export default function Hero({ onVerifyClick }: HeroProps) {
                   </div>
                 </div>
 
+                {/* Android App Quick Download Bar */}
+                <div
+                  onClick={() => setIsDownloadOpen(true)}
+                  className="p-3 rounded-xl bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-indigo-500/10 border border-cyan-500/30 flex items-center justify-between cursor-pointer hover:border-cyan-400 transition-all group"
+                  title="Click to Download Android App"
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                      <Smartphone className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h6 className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span>Official Android App Available</span>
+                        <span className="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.2 rounded font-mono font-bold">.APK</span>
+                      </h6>
+                      <p className="text-[10px] text-slate-400">Install directly on any Android smartphone</p>
+                    </div>
+                  </div>
+                  <Download className="w-4 h-4 text-cyan-400 group-hover:translate-y-0.5 transition-transform" />
+                </div>
+
                 <div className="space-y-2 text-xs text-slate-300">
                   <div className="flex items-center space-x-2">
                     <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -172,6 +203,13 @@ export default function Hero({ onVerifyClick }: HeroProps) {
 
         </div>
       </div>
+
+      {/* Download App Modal */}
+      <DownloadAppModal
+        isOpen={isDownloadOpen}
+        onClose={() => setIsDownloadOpen(false)}
+      />
     </section>
   );
 }
+
