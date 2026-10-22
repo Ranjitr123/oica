@@ -66,8 +66,8 @@ export default function PaymentModal({
   if (!isOpen) return null;
 
   const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(
-    "Odisha Institute of Computer Applications"
-  )}&am=${amount}&cu=INR&tn=${encodeURIComponent(`OICA Fee - ${submissionId}`)}`;
+    "Odisha Institute of Computer Studies"
+  )}&am=${amount}&cu=INR&tn=${encodeURIComponent(`OICS Fee - ${submissionId}`)}`;
 
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
@@ -140,7 +140,7 @@ export default function PaymentModal({
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "OICA Institute",
+        name: "OICS Institute",
         description: `Admission Fee - ${submissionId}`,
         image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=120&auto=format&fit=crop&q=80",
         order_id: orderData.orderId,
@@ -219,7 +219,7 @@ export default function PaymentModal({
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>100% Secure Payment</span>
             </div>
-            <h3 className="text-xl font-extrabold tracking-tight">OICA Online Fee Payment</h3>
+            <h3 className="text-xl font-extrabold tracking-tight">OICS Online Fee Payment</h3>
             <p className="text-xs text-emerald-100 opacity-90 mt-0.5">
               Ref: <span className="font-mono font-bold text-white">{submissionId}</span> | {studentName}
             </p>
@@ -262,7 +262,7 @@ export default function PaymentModal({
             </div>
 
             <div className="bg-emerald-950/40 border border-emerald-800/50 p-3 rounded-lg text-emerald-300 text-xs text-left">
-              💡 <strong>Receipt Status:</strong> Details have been stored in the OICA Admin Excel sheet and emailed to admin.
+              💡 <strong>Receipt Status:</strong> Details have been stored in the OICS Admin Excel sheet and emailed to admin.
             </div>
 
             <button

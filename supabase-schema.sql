@@ -1,5 +1,5 @@
 -- ========================================================
--- Complete Supabase Setup SQL for Odisha Institute of Computer Applications (OICA)
+-- Complete Supabase Setup SQL for Odisha Institute of Computer Studies (OICS)
 -- Copy & Run this SQL script in Supabase SQL Editor
 -- ========================================================
 
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS public.certificates (
   percentage TEXT DEFAULT '95%',
   student_photo_url TEXT,
   pdf_url TEXT,
-  center_name TEXT DEFAULT 'AICA Main Tech Campus',
+  center_name TEXT DEFAULT 'OICS Main Tech Campus',
   verification_status TEXT DEFAULT 'VERIFIED',
   authorized_signatory TEXT DEFAULT 'Dr. A. K. Verma, Academic Director',
   created_at TIMESTAMPTZ DEFAULT NOW()

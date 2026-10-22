@@ -11,7 +11,7 @@ export async function GET() {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "Content-Disposition":
-          'attachment; filename="OICA_Admission_Submissions.xlsx"',
+          'attachment; filename="OICS_Admission_Submissions.xlsx"',
         "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });

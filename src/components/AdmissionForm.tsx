@@ -144,7 +144,7 @@ export default function AdmissionForm() {
             <div className="bg-slate-800/80 backdrop-blur-md border border-slate-700/80 rounded-2xl p-6 shadow-xl">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                 <Award className="w-6 h-6 text-amber-400" />
-                Why Join OICA?
+                Why Join OICS?
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">

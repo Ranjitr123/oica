@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-[#090d16] flex items-center justify-center text-cyan-400 font-mono">
-        Loading AICA Institute Portal...
+        Loading OICS Institute Portal...
       </div>
     }>
       <PageContent />

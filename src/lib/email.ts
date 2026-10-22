@@ -17,12 +17,12 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
   const pass = process.env.SMTP_PASS;
 
   const adminEmail = process.env.ADMIN_EMAIL || "sanjit007muna@gmail.com";
-  const fromEmail = process.env.EMAIL_FROM || (user ? `"OICA Admissions" <${user}>` : `"OICA Admissions" <noreply@oica.edu.in>`);
+  const fromEmail = process.env.EMAIL_FROM || (user ? `"OICS Admissions" <${user}>` : `"OICS Admissions" <noreply@oics.edu.in>`);
 
   // If credentials are missing, perform simulation/logging
   if (!user || !pass) {
     console.log("=================================================");
-    console.log("[OICA EMAIL NOTICE]: SMTP credentials not set in .env.local.");
+    console.log("[OICS EMAIL NOTICE]: SMTP credentials not set in .env.local.");
     console.log(`- Admin Notification Target: ${adminEmail}`);
     console.log(`- Student Notification Target: ${record.email}`);
     console.log(`- Submission ID: ${record.id}`);
@@ -56,11 +56,11 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 20px; text-align: center; color: #ffffff;">
             <h2 style="margin: 0; font-size: 22px;">🎓 New Admission Submission</h2>
-            <p style="margin: 5px 0 0; font-size: 14px; opacity: 0.9;">Odisha Institute of Computer Applications (OICA)</p>
+            <p style="margin: 5px 0 0; font-size: 14px; opacity: 0.9;">Odisha Institute of Computer Studies (OICS)</p>
           </div>
           <div style="padding: 24px;">
             <p style="font-size: 16px;">Hello Admin,</p>
-            <p style="font-size: 15px;">A new student has registered on the OICA portal. Below are the complete user details:</p>
+            <p style="font-size: 15px;">A new student has registered on the OICS portal. Below are the complete user details:</p>
 
             <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
               <tr style="background-color: #f8fafc;">
@@ -103,12 +103,12 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
 
             <div style="margin-top: 24px; padding: 12px; background-color: #eff6ff; border-left: 4px solid #2563eb; border-radius: 4px;">
               <p style="margin: 0; font-size: 14px; color: #1e40af;">
-                💡 <strong>Excel Backup Notice:</strong> This submission has been automatically appended to <code>data/submissions.xlsx</code>. You can also export/download the full Excel sheet anytime from the OICA Admin Dashboard.
+                💡 <strong>Excel Backup Notice:</strong> This submission has been automatically appended to <code>data/submissions.xlsx</code>. You can also export/download the full Excel sheet anytime from the OICS Admin Dashboard.
               </p>
             </div>
           </div>
           <div style="background-color: #f1f5f9; padding: 12px; text-align: center; font-size: 12px; color: #64748b;">
-            OICA Automated Admission System &copy; ${new Date().getFullYear()}
+            OICS Automated Admission System &copy; ${new Date().getFullYear()}
           </div>
         </div>
       </div>
@@ -126,13 +126,13 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
       <div style="font-family: Arial, sans-serif; background-color: #f4f6f9; padding: 20px; color: #333;">
         <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="background: linear-gradient(135deg, #047857, #10b981); padding: 24px; text-align: center; color: #ffffff;">
-            <h1 style="margin: 0; font-size: 24px;">Welcome to OICA! 🎉</h1>
-            <p style="margin: 8px 0 0; font-size: 15px;">Odisha Institute of Computer Applications</p>
+            <h1 style="margin: 0; font-size: 24px;">Welcome to OICS! 🎉</h1>
+            <p style="margin: 8px 0 0; font-size: 15px;">Odisha Institute of Computer Studies</p>
           </div>
           <div style="padding: 24px;">
             <p style="font-size: 16px;">Dear <strong>${record.fullName}</strong>,</p>
             <p style="font-size: 15px; line-height: 1.5;">
-              Thank you for submitting your admission application to <strong>Odisha Institute of Computer Applications (OICA)</strong>! We are thrilled about your interest in empowering your career with top-tier technology education.
+              Thank you for submitting your admission application to <strong>Odisha Institute of Computer Studies (OICS)</strong>! We are thrilled about your interest in empowering your career with top-tier technology education.
             </p>
 
             <div style="background-color: #ecfdf5; border-left: 4px solid #10b981; padding: 16px; border-radius: 4px; margin: 20px 0;">
@@ -155,7 +155,7 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
             </p>
           </div>
           <div style="background-color: #111827; color: #9ca3af; padding: 16px; text-align: center; font-size: 12px;">
-            <p style="margin: 0 0 4px 0; color: #ffffff; font-weight: bold;">Odisha Institute of Computer Applications (OICA)</p>
+            <p style="margin: 0 0 4px 0; color: #ffffff; font-weight: bold;">Odisha Institute of Computer Studies (OICS)</p>
             <p style="margin: 0;">Govt. Registered & ISO Certified Computer Training Institute</p>
           </div>
         </div>
@@ -165,7 +165,7 @@ export async function sendAdmissionNotification(record: AdmissionRecord): Promis
     const userMailPromise = transporter.sendMail({
       from: fromEmail,
       to: record.email,
-      subject: `Application Confirmation (${record.id}) - Odisha Institute of Computer Applications (OICA)`,
+      subject: `Application Confirmation (${record.id}) - Odisha Institute of Computer Studies (OICS)`,
       html: userHtml,
     });
 

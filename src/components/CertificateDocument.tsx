@@ -14,7 +14,7 @@ export default function CertificateDocument({ certificate, dbSource }: Certifica
   const certRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [origin, setOrigin] = useState("https://oica-institute.edu");
+  const [origin, setOrigin] = useState("https://oics-institute.edu");
   const [viewMode, setViewMode] = useState<"uploaded_pdf" | "digital_card">(
     certificate.pdfUrl ? "uploaded_pdf" : "digital_card"
   );

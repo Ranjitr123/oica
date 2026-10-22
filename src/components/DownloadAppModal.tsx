@@ -92,9 +92,10 @@ export default function DownloadAppModal({ isOpen, onClose }: DownloadAppModalPr
             {/* Right Direct Download CTA */}
             <div className="sm:col-span-8 space-y-3">
               <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-300">
-                <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Format: <strong>APK</strong></span>
+                <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Format: <strong>Signed APK</strong></span>
+                <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Size: <strong>852 KB</strong></span>
                 <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Compatibility: <strong>Android 6.0 - 15+</strong></span>
-                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">100% Virus Free</span>
+                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">100% Verified Safe</span>
               </div>
 
               <a
@@ -103,7 +104,7 @@ export default function DownloadAppModal({ isOpen, onClose }: DownloadAppModalPr
                 className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-cyan-500/25 active:scale-95 transition-all text-center"
               >
                 <Download className="w-4 h-4 animate-bounce" />
-                <span>Download OICS APK Directly</span>
+                <span>Download OICS APK Directly (852 KB)</span>
               </a>
 
               <div className="flex items-center justify-between text-xs text-slate-400 pt-1">
@@ -148,7 +149,7 @@ export default function DownloadAppModal({ isOpen, onClose }: DownloadAppModalPr
           </div>
 
           {/* Android Installation Instructions Guide */}
-          <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+          <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5">
             <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300">
               <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
               <span>Easy 3-Step Android Installation Guide:</span>
@@ -158,12 +159,18 @@ export default function DownloadAppModal({ isOpen, onClose }: DownloadAppModalPr
                 Click <strong className="text-white">Download OICS APK Directly</strong> or scan the QR code above.
               </li>
               <li>
-                Once downloaded, tap the notification. If prompted with <em className="text-amber-200">&quot;Install Unknown Apps&quot;</em>, go to <strong className="text-white">Settings → Allow from this source</strong> (standard security step for direct APKs).
+                Once downloaded, tap the notification or open <strong className="text-white">My Files → Downloads → oics-app.apk</strong>. If prompted with <em className="text-amber-200">&quot;Install Unknown Apps&quot;</em>, go to <strong className="text-white">Settings → Allow from this source</strong> (standard Android security step for direct APKs).
               </li>
               <li>
-                Tap <strong className="text-emerald-400">Install</strong> and launch the app to access all OICS services instantly!
+                Tap <strong className="text-emerald-400">Install</strong> to complete setup.
               </li>
             </ol>
+            <div className="bg-cyan-950/30 border border-cyan-500/30 rounded-lg p-2.5 text-[11px] text-cyan-200/90 flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <span>
+                <strong>Fixed &amp; Signed Build:</strong> This build replaces the previous placeholder file. If your phone previously cached the old 39 KB file showing &quot;Parsing failed&quot;, simply tap the button above to get the fresh 852 KB signed release.
+              </span>
+            </div>
           </div>
         </div>
 
